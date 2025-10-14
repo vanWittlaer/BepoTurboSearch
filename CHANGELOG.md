@@ -22,11 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - SuggestPageLoadedSubscriber now logs all search queries automatically
 
-## [0.0.2] - 2025-01-14
+## [0.0.3] - 2025-01-14
 
 ### Fixed
 - **MariaDB compatibility**: Removed foreign key constraints for category and cms_page tables due to versioning issues
 - Added indexes for category_id and cms_page_id to maintain query performance
+- Merged all migrations into single migration file for clean fresh installations
 
 ## [0.0.1] - 2025-01-13
 

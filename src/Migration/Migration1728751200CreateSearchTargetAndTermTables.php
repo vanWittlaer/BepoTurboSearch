@@ -24,10 +24,9 @@ CREATE TABLE IF NOT EXISTS `bepo_turbo_suggest_target` (
     `created_at` DATETIME(3) NOT NULL,
     `updated_at` DATETIME(3) NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk.bepo_turbo_suggest_target.category_id`
-        FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `fk.bepo_turbo_suggest_target.cms_page_id`
-        FOREIGN KEY (`cms_page_id`) REFERENCES `cms_page` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    KEY `fk.bepo_turbo_suggest_target.category_id` (`category_id`),
+    KEY `fk.bepo_turbo_suggest_target.cms_page_id` (`cms_page_id`),
+    KEY `fk.bepo_turbo_suggest_target.sales_channel_id` (`sales_channel_id`),
     CONSTRAINT `fk.bepo_turbo_suggest_target.sales_channel_id`
         FOREIGN KEY (`sales_channel_id`) REFERENCES `sales_channel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
