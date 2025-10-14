@@ -1,0 +1,37 @@
+{% sw_extends '@Storefront/storefront/layout/header/search-suggest.html.twig' %}
+
+{% block layout_search_suggest_results %}
+    {% set turboTargets = page.getExtension('turboSuggestTargets') %}
+
+    {% if turboTargets and turboTargets|length > 0 %}
+        {% block layout_search_suggest_turbo_targets %}
+            {% for target in turboTargets %}
+                {% block layout_search_suggest_turbo_target_item %}
+                    <li class="js-result" role="option">
+                        <a href="{{ seoUrl('frontend.navigation.page', {'navigationId': target.categoryId ? target.categoryId : target.cmsPageId}) }}"
+                           class="btn btn-primary w-100 d-flex justify-content-between text-start mb-2"
+                           title="{{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.cmsPage.name) }}">
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center">
+                                    <div class="fw-bold flex-grow-1">
+                                        {{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.cmsPage.name) }}
+                                    </div>
+                                    <div class="ms-3">
+                                        {% sw_icon 'arrow-medium-right' style { size: 'sm', pack: 'solid' } %}
+                                    </div>
+                                </div>
+                                {% if target.translated.teaserText %}
+                                    <div class="small">
+                                        {{ target.translated.teaserText }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </li>
+                {% endblock %}
+            {% endfor %}
+        {% endblock %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}

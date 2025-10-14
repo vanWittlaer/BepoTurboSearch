@@ -1,0 +1,103 @@
+{% block bepo_turbo_suggest_target_list %}
+    <sw-page class="bepo-turbo-suggest-target-list">
+        {% block bepo_turbo_suggest_target_list_search_bar %}
+            <template #search-bar>
+                <sw-search-bar
+                    :initialSearchType="$tc('bepo-turbo-suggest.general.mainMenuItemGeneral')"
+                    @search="onSearch">
+                </sw-search-bar>
+            </template>
+        {% endblock %}
+
+        {% block bepo_turbo_suggest_target_list_smart_bar_header %}
+            <template #smart-bar-header>
+                <h2>
+                    {{ $tc('bepo-turbo-suggest.list.title') }}
+                </h2>
+            </template>
+        {% endblock %}
+
+        {% block bepo_turbo_suggest_target_list_smart_bar_actions %}
+            <template #smart-bar-actions>
+                <sw-button
+                    :routerLink="{ name: 'bepo.turbo.suggest.target.detail', params: { id: 'create' } }"
+                    variant="primary">
+                    {{ $tc('bepo-turbo-suggest.list.buttonAddTarget') }}
+                </sw-button>
+            </template>
+        {% endblock %}
+
+        {% block bepo_turbo_suggest_target_list_language_switch %}
+            <template #language-switch>
+                <sw-language-switch
+                    @on-change="onChangeLanguage">
+                </sw-language-switch>
+            </template>
+        {% endblock %}
+
+        {% block bepo_turbo_suggest_target_list_content %}
+            <template #content>
+                <div class="bepo-turbo-suggest-target-list__content">
+                    {% block bepo_turbo_suggest_target_list_grid %}
+                        <sw-data-grid
+                            :dataSource="searchTargets"
+                            :columns="columns"
+                            :showSelection="false"
+                            :showSettings="true"
+                            :isLoading="isLoading"
+                            :sortBy="sortBy"
+                            :sortDirection="sortDirection"
+                            @column-sort="onSortColumn">
+
+                            {% block bepo_turbo_suggest_target_list_grid_columns %}
+
+                                {% block bepo_turbo_suggest_target_list_grid_column_title %}
+                                    <template #column-title="{ item }">
+                                        <router-link :to="{ name: 'bepo.turbo.suggest.target.detail', params: { id: item.id } }">
+                                            {{ item.title || '-' }}
+                                        </router-link>
+                                    </template>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_list_grid_column_category %}
+                                    <template #column-category.name="{ item }">
+                                        {{ item.category ? item.category.translated.name : '-' }}
+                                    </template>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_list_grid_column_cms_page %}
+                                    <template #column-cmsPage.name="{ item }">
+                                        {{ item.cmsPage ? item.cmsPage.name : '-' }}
+                                    </template>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_list_grid_column_sales_channel %}
+                                    <template #column-salesChannel.name="{ item }">
+                                        {{ item.salesChannel ? item.salesChannel.translated.name : '-' }}
+                                    </template>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_list_grid_column_priority %}
+                                    <template #column-priority="{ item }">
+                                        {{ item.priority }}
+                                    </template>
+                                {% endblock %}
+
+                            {% endblock %}
+
+                            {% block bepo_turbo_suggest_target_list_grid_action_modals %}
+                            {% endblock %}
+                        </sw-data-grid>
+                    {% endblock %}
+
+                    {% block bepo_turbo_suggest_target_list_empty_state %}
+                        <sw-empty-state
+                            v-if="!isLoading && !total"
+                            :title="$tc('bepo-turbo-suggest.list.title')">
+                        </sw-empty-state>
+                    {% endblock %}
+                </div>
+            </template>
+        {% endblock %}
+    </sw-page>
+{% endblock %}

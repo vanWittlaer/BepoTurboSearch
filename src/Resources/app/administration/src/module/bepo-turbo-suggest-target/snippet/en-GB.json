@@ -1,0 +1,59 @@
+{
+    "bepo-turbo-suggest": {
+        "general": {
+            "mainMenuItemGeneral": "Turbo Search Suggests",
+            "descriptionTextModule": "Manage categories and landing pages in search suggestions"
+        },
+        "list": {
+            "title": "Turbo Search Suggests",
+            "buttonAddTarget": "Add new target",
+            "columnTitle": "Title",
+            "columnCategory": "Category",
+            "columnCmsPage": "Landing Page",
+            "columnSalesChannel": "Sales Channel",
+            "columnActive": "Active",
+            "columnPriority": "Priority"
+        },
+        "detail": {
+            "title": "New search target",
+            "titleEdit": "Edit search target",
+            "tabGeneral": "General",
+            "tabSearchTerms": "Search Terms",
+            "labelTitle": "Title",
+            "labelTeaserText": "Teaser Text",
+            "labelCategory": "Category",
+            "labelCmsPage": "Landing Page",
+            "labelSalesChannel": "Sales Channel",
+            "labelActive": "Active",
+            "labelPriority": "Priority",
+            "placeholderTitle": "Overrides the category or landing page title...",
+            "placeholderTeaserText": "Short description for search suggestions...",
+            "placeholderCategory": "Select a category...",
+            "placeholderCmsPage": "Select a landing page...",
+            "placeholderSalesChannel": "Select a sales channel...",
+            "helpTextPriority": "Higher priority = higher in the list",
+            "helpTextTitle": "Optional: Overrides the category or landing page name in search suggestions",
+            "helpTextCategory": "Select a category OR a landing page (mutually exclusive)",
+            "helpTextCmsPage": "Select a landing page OR a category (mutually exclusive)",
+            "buttonSave": "Save",
+            "buttonCancel": "Cancel",
+            "buttonAddTerm": "Add search term",
+            "buttonEditTerm": "Edit",
+            "buttonDeleteTerm": "Delete",
+            "columnTerm": "Search term",
+            "columnLanguage": "Language",
+            "columnTermActive": "Active",
+            "titleAddTerm": "Add search term",
+            "titleEditTerm": "Edit search term",
+            "labelTermValue": "Search term",
+            "labelTermLanguage": "Language",
+            "labelTermActive": "Active",
+            "placeholderTermValue": "e.g. shi, t-sh, shirt...",
+            "placeholderTermLanguage": "Select a language...",
+            "errorTermRequired": "Search term and language are required",
+            "errorSaveTargetFirst": "Please save the search target first before adding search terms",
+            "successTermSaved": "Search term saved successfully",
+            "emptyStateText": "No search terms available. Click \"Add search term\" to create a new term."
+        }
+    }
+}

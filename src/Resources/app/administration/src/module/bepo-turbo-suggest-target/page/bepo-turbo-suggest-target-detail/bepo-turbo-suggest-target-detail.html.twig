@@ -1,0 +1,223 @@
+{% block bepo_turbo_suggest_target_detail %}
+    <sw-page class="bepo-turbo-suggest-target-detail">
+        {% block bepo_turbo_suggest_target_detail_header %}
+            <template #smart-bar-header>
+                <h2>
+                    {{ isCreateMode ? $tc('bepo-turbo-suggest.detail.title') : $tc('bepo-turbo-suggest.detail.titleEdit') }}
+                </h2>
+            </template>
+        {% endblock %}
+
+        {% block bepo_turbo_suggest_target_detail_actions %}
+            <template #smart-bar-actions>
+                <sw-button
+                    :disabled="isLoading"
+                    @click="onCancel">
+                    {{ $tc('bepo-turbo-suggest.detail.buttonCancel') }}
+                </sw-button>
+
+                <sw-button-process
+                    :isLoading="isLoading"
+                    :processSuccess="isSaveSuccessful"
+                    variant="primary"
+                    @process-finish="isSaveSuccessful = false"
+                    @click="onSave">
+                    {{ $tc('bepo-turbo-suggest.detail.buttonSave') }}
+                </sw-button-process>
+            </template>
+        {% endblock %}
+
+        {% block bepo_turbo_suggest_target_detail_language_switch %}
+            <template #language-switch>
+                <sw-language-switch
+                    :save-changes-function="saveOnLanguageChange"
+                    :abort-change-function="abortOnLanguageChange"
+                    @on-change="onChangeLanguage">
+                </sw-language-switch>
+            </template>
+        {% endblock %}
+
+        {% block bepo_turbo_suggest_target_detail_content %}
+            <template #content>
+                <sw-card-view v-if="searchTarget">
+                    {% block bepo_turbo_suggest_target_detail_general_card %}
+                        <sw-card
+                            :title="$tc('bepo-turbo-suggest.detail.tabGeneral')"
+                            :isLoading="isLoading">
+
+                            <sw-container columns="repeat(auto-fit, minmax(250px, 1fr))" gap="0px 30px">
+                                {% block bepo_turbo_suggest_target_detail_title_field %}
+                                    <sw-text-field
+                                        v-model:value="searchTarget.title"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelTitle')"
+                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTitle')"
+                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextTitle')">
+                                    </sw-text-field>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_detail_teaser_text_field %}
+                                    <sw-textarea-field
+                                        v-model="searchTarget.teaserText"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelTeaserText')"
+                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTeaserText')">
+                                    </sw-textarea-field>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_detail_category_field %}
+                                    <sw-entity-single-select
+                                        v-model:value="searchTarget.categoryId"
+                                        entity="category"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelCategory')"
+                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderCategory')"
+                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextCategory')"
+                                        :disabled="!!searchTarget.cmsPageId"
+                                        show-clearable-button>
+                                    </sw-entity-single-select>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_detail_cms_page_field %}
+                                    <sw-entity-single-select
+                                        v-model:value="searchTarget.cmsPageId"
+                                        entity="cms_page"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelCmsPage')"
+                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderCmsPage')"
+                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextCmsPage')"
+                                        :disabled="!!searchTarget.categoryId"
+                                        show-clearable-button>
+                                    </sw-entity-single-select>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_detail_sales_channel_field %}
+                                    <sw-entity-single-select
+                                        v-model:value="searchTarget.salesChannelId"
+                                        entity="sales_channel"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelSalesChannel')"
+                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderSalesChannel')"
+                                        :error="salesChannelIdError"
+                                        required>
+                                    </sw-entity-single-select>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_detail_priority_field %}
+                                    <sw-number-field
+                                        v-model:value="searchTarget.priority"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelPriority')"
+                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextPriority')"
+                                        numberType="int">
+                                    </sw-number-field>
+                                {% endblock %}
+                            </sw-container>
+                        </sw-card>
+                    {% endblock %}
+
+                    {% block bepo_turbo_suggest_target_detail_search_terms_card %}
+                        <sw-card
+                            v-if="!isCreateMode"
+                            :title="$tc('bepo-turbo-suggest.detail.tabSearchTerms')"
+                            :isLoading="isLoading">
+
+                            <template #toolbar>
+                                <sw-button
+                                    variant="primary"
+                                    size="small"
+                                    @click="onAddTerm">
+                                    {{ $tc('bepo-turbo-suggest.detail.buttonAddTerm') }}
+                                </sw-button>
+                            </template>
+
+                            {% block bepo_turbo_suggest_target_detail_search_terms_grid %}
+                                <sw-data-grid
+                                    v-if="searchTarget.searchTerms && searchTarget.searchTerms.length > 0"
+                                    :dataSource="searchTarget.searchTerms"
+                                    :columns="termColumns"
+                                    :showSelection="false"
+                                    :showSettings="false"
+                                    :isLoading="isLoading">
+
+                                    {% block bepo_turbo_suggest_target_detail_search_terms_grid_column_active %}
+                                        <template #column-active="{ item }">
+                                            <sw-icon
+                                                v-if="item.active"
+                                                name="regular-checkmark-xs"
+                                                size="16"
+                                                color="#37d046">
+                                            </sw-icon>
+                                            <sw-icon
+                                                v-else
+                                                name="regular-times-s"
+                                                size="16"
+                                                color="#de294c">
+                                            </sw-icon>
+                                        </template>
+                                    {% endblock %}
+
+                                    {% block bepo_turbo_suggest_target_detail_search_terms_grid_actions %}
+                                        <template #actions="{ item }">
+                                            <sw-context-menu-item @click="onEditTerm(item)">
+                                                {{ $tc('bepo-turbo-suggest.detail.buttonEditTerm') }}
+                                            </sw-context-menu-item>
+                                            <sw-context-menu-item
+                                                variant="danger"
+                                                @click="onDeleteTerm(item)">
+                                                {{ $tc('bepo-turbo-suggest.detail.buttonDeleteTerm') }}
+                                            </sw-context-menu-item>
+                                        </template>
+                                    {% endblock %}
+                                </sw-data-grid>
+
+                                <div v-else class="sw-card__content">
+                                    <p style="text-align: center; padding: 40px 0;">
+                                        {{ $tc('bepo-turbo-suggest.detail.emptyStateText') }}
+                                    </p>
+                                </div>
+                            {% endblock %}
+                        </sw-card>
+                    {% endblock %}
+                </sw-card-view>
+
+                {% block bepo_turbo_suggest_target_detail_term_modal %}
+                    <sw-modal
+                        v-if="showTermModal && currentTerm"
+                        :title="currentTerm.id ? $tc('bepo-turbo-suggest.detail.titleEditTerm') : $tc('bepo-turbo-suggest.detail.titleAddTerm')"
+                        @modal-close="onCancelTerm">
+
+                        <sw-text-field
+                            v-model:value="currentTerm.term"
+                            :label="$tc('bepo-turbo-suggest.detail.labelTermValue')"
+                            :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTermValue')"
+                            required>
+                        </sw-text-field>
+
+                        <sw-entity-single-select
+                            v-model:value="currentTerm.languageId"
+                            entity="language"
+                            :label="$tc('bepo-turbo-suggest.detail.labelTermLanguage')"
+                            :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTermLanguage')"
+                            required>
+                        </sw-entity-single-select>
+
+                        <sw-switch-field
+                            v-model:value="currentTerm.active"
+                            :label="$tc('bepo-turbo-suggest.detail.labelTermActive')">
+                        </sw-switch-field>
+
+                        <template #modal-footer>
+                            <sw-button
+                                size="small"
+                                @click="onCancelTerm">
+                                {{ $tc('bepo-turbo-suggest.detail.buttonCancel') }}
+                            </sw-button>
+
+                            <sw-button
+                                variant="primary"
+                                size="small"
+                                @click="onSaveTerm">
+                                {{ $tc('bepo-turbo-suggest.detail.buttonSave') }}
+                            </sw-button>
+                        </template>
+                    </sw-modal>
+                {% endblock %}
+            </template>
+        {% endblock %}
+    </sw-page>
+{% endblock %}

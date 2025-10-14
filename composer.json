@@ -1,0 +1,45 @@
+{
+    "name": "bepo/turbo-suggest",
+    "description": "Enhance your search experience by displaying categories and landing pages prominently in the search suggestions, making it easier for customers to find what they're looking for.",
+    "type": "shopware-platform-plugin",
+    "version": "0.0.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benny Poensgen"
+        }
+    ],
+    "require": {
+        "shopware/core": "^6.6.0 || ^6.7.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "Bepo\\TurboSuggest\\BepoTurboSuggest",
+        "copyright": "(c) by B. Poensgen IT-Dienstleistungen",
+        "label": {
+            "de-DE": "Turbo-Suchvorschläge",
+            "en-GB": "Turbo Search Suggests"
+        },
+        "description": {
+            "de-DE": "Verbessern Sie Ihr Sucherlebnis, indem Sie Kategorien und Landing Pages prominent in den Suchvorschlägen anzeigen und Ihren Kunden so die Suche nach dem Gewünschten erleichtern.",
+            "en-GB": "Enhance your search experience by displaying categories and landing pages prominently in the search suggestions, making it easier for customers to find what they're looking for."
+        },
+        "manufacturerLink": {
+            "de-DE": "https://www.poensgen.de",
+            "en-GB": "https://www.poensgen.de"
+        },
+        "supportLink": {
+            "de-DE": "https://www.poensgen.de/support",
+            "en-GB": "https://www.poensgen.de/support"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Bepo\\TurboSuggest\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Bepo\\TurboSuggest\\Tests\\": "tests/"
+        }
+    }
+}
