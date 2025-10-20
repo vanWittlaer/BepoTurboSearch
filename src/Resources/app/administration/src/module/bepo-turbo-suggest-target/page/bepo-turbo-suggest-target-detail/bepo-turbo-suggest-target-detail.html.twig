@@ -58,7 +58,7 @@
 
                                 {% block bepo_turbo_suggest_target_detail_teaser_text_field %}
                                     <sw-textarea-field
-                                        v-model="searchTarget.teaserText"
+                                        v-model:value="searchTarget.teaserText"
                                         :label="$tc('bepo-turbo-suggest.detail.labelTeaserText')"
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTeaserText')">
                                     </sw-textarea-field>
