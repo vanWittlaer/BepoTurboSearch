@@ -1,6 +1,6 @@
 import template from './bepo-turbo-suggest-target-list.html.twig';
 
-const { Component, Mixin } = Shopware;
+const { Component, Mixin, Context } = Shopware;
 const { Criteria } = Shopware.Data;
 
 Component.register('bepo-turbo-suggest-target-list', {
@@ -18,7 +18,9 @@ Component.register('bepo-turbo-suggest-target-list', {
             searchTargets: null,
             isLoading: false,
             sortBy: 'priority',
-            sortDirection: 'DESC'
+            sortDirection: 'DESC',
+            showDeleteModal: null,
+            total: 0
         };
     },
 
@@ -29,6 +31,10 @@ Component.register('bepo-turbo-suggest-target-list', {
     },
 
     computed: {
+        isSystemDefaultLanguage() {
+            return Context.api.languageId === Context.api.systemLanguageId;
+        },
+
         columns() {
             return [
                 {
@@ -74,6 +80,10 @@ Component.register('bepo-turbo-suggest-target-list', {
 
     methods: {
         getList() {
+            if (!this.repository) {
+                return;
+            }
+
             this.isLoading = true;
 
             const criteria = new Criteria(this.page, this.limit);
@@ -83,7 +93,7 @@ Component.register('bepo-turbo-suggest-target-list', {
             criteria.addAssociation('salesChannel');
             criteria.addAssociation('searchTerms');
 
-            this.repository.search(criteria).then((result) => {
+            this.repository.search(criteria, Context.api).then((result) => {
                 this.searchTargets = result;
                 this.total = result.total;
                 this.isLoading = false;
@@ -91,6 +101,26 @@ Component.register('bepo-turbo-suggest-target-list', {
         },
 
         onChangeLanguage() {
+            this.getList();
+        },
+
+        onCloseDeleteModal() {
+            this.showDeleteModal = null;
+        },
+
+        onConfirmDelete(id) {
+            if (!id) {
+                return;
+            }
+
+            this.onCloseDeleteModal();
+
+            this.repository.delete(id, Context.api).then(() => {
+                this.getList();
+            });
+        },
+
+        onInlineEditCancel() {
             this.getList();
         }
     }

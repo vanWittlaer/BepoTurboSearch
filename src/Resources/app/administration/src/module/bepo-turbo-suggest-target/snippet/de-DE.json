@@ -12,7 +12,16 @@
             "columnCmsPage": "Landing Page",
             "columnSalesChannel": "Verkaufskanal",
             "columnActive": "Aktiv",
-            "columnPriority": "Priorität"
+            "columnPriority": "Priorität",
+            "contextMenuEdit": "Bearbeiten",
+            "contextMenuDelete": "Löschen",
+            "deleteModalTitle": "Such-Ziel löschen",
+            "deleteModalMessage": "Möchtest du dieses Such-Ziel wirklich löschen? Alle zugehörigen Suchbegriffe werden ebenfalls gelöscht.",
+            "deleteModalCancel": "Abbrechen",
+            "deleteModalConfirm": "Löschen",
+            "deleteSuccessMessage": "Such-Ziel erfolgreich gelöscht",
+            "deleteErrorMessage": "Fehler beim Löschen des Such-Ziels",
+            "actionsDisabledInLanguage": "Such-Ziele können nur in der Standard-Systemsprache erstellt werden."
         },
         "detail": {
             "title": "Neues Such-Ziel",
@@ -21,6 +30,8 @@
             "tabSearchTerms": "Suchbegriffe",
             "labelTitle": "Titel",
             "labelTeaserText": "Teaser-Text",
+            "labelDisplayImage": "Anzeigebild",
+            "helpTextDisplayImage": "Bild, das im Such-Dropdown angezeigt wird (wie Produktbilder)",
             "labelCategory": "Kategorie",
             "labelCmsPage": "Landing Page",
             "labelSalesChannel": "Verkaufskanal",

@@ -20,7 +20,13 @@
         {% block bepo_turbo_suggest_target_list_smart_bar_actions %}
             <template #smart-bar-actions>
                 <sw-button
+                    v-tooltip.bottom="{
+                        message: $tc('bepo-turbo-suggest.list.actionsDisabledInLanguage'),
+                        disabled: isSystemDefaultLanguage,
+                        showOnDisabledElements: true
+                    }"
                     :routerLink="{ name: 'bepo.turbo.suggest.target.detail', params: { id: 'create' } }"
+                    :disabled="!isSystemDefaultLanguage"
                     variant="primary">
                     {{ $tc('bepo-turbo-suggest.list.buttonAddTarget') }}
                 </sw-button>
@@ -47,7 +53,8 @@
                             :isLoading="isLoading"
                             :sortBy="sortBy"
                             :sortDirection="sortDirection"
-                            @column-sort="onSortColumn">
+                            @column-sort="onSortColumn"
+                            @inline-edit-cancel="onInlineEditCancel">
 
                             {% block bepo_turbo_suggest_target_list_grid_columns %}
 
@@ -85,8 +92,50 @@
 
                             {% endblock %}
 
-                            {% block bepo_turbo_suggest_target_list_grid_action_modals %}
+                            {% block bepo_turbo_suggest_target_list_grid_actions %}
+                                <template #actions="{ item }">
+                                    {% block bepo_turbo_suggest_target_list_grid_actions_edit %}
+                                        <sw-context-menu-item
+                                            :routerLink="{ name: 'bepo.turbo.suggest.target.detail', params: { id: item.id } }">
+                                            {{ $tc('bepo-turbo-suggest.list.contextMenuEdit') }}
+                                        </sw-context-menu-item>
+                                    {% endblock %}
+
+                                    {% block bepo_turbo_suggest_target_list_grid_actions_delete %}
+                                        <sw-context-menu-item
+                                            variant="danger"
+                                            @click="showDeleteModal = item.id">
+                                            {{ $tc('bepo-turbo-suggest.list.contextMenuDelete') }}
+                                        </sw-context-menu-item>
+                                    {% endblock %}
+                                </template>
                             {% endblock %}
+
+                            {% block bepo_turbo_suggest_target_list_grid_action_modals %}
+                                <template #action-modals="{ item }">
+                                    <sw-modal
+                                        v-if="showDeleteModal === item.id"
+                                        :title="$tc('bepo-turbo-suggest.list.deleteModalTitle')"
+                                        @modal-close="onCloseDeleteModal">
+                                        <p>{{ $tc('bepo-turbo-suggest.list.deleteModalMessage') }}</p>
+
+                                        <template #modal-footer>
+                                            <sw-button
+                                                size="small"
+                                                @click="onCloseDeleteModal">
+                                                {{ $tc('bepo-turbo-suggest.list.deleteModalCancel') }}
+                                            </sw-button>
+                                            <sw-button
+                                                size="small"
+                                                variant="primary"
+                                                @click="onConfirmDelete(item.id)">
+                                                {{ $tc('bepo-turbo-suggest.list.deleteModalConfirm') }}
+                                            </sw-button>
+                                        </template>
+                                    </sw-modal>
+                                </template>
+                            {% endblock %}
+
                         </sw-data-grid>
                     {% endblock %}
 

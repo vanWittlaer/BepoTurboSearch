@@ -30,6 +30,7 @@
         {% block bepo_turbo_suggest_target_detail_language_switch %}
             <template #language-switch>
                 <sw-language-switch
+                    :disabled="isCreateMode"
                     :save-changes-function="saveOnLanguageChange"
                     :abort-change-function="abortOnLanguageChange"
                     @on-change="onChangeLanguage">
@@ -61,6 +62,15 @@
                                         :label="$tc('bepo-turbo-suggest.detail.labelTeaserText')"
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTeaserText')">
                                     </sw-textarea-field>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_detail_media_field %}
+                                    <sw-media-field
+                                        v-model:value="searchTarget.mediaId"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelDisplayImage')"
+                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextDisplayImage')"
+                                        show-default-actions>
+                                    </sw-media-field>
                                 {% endblock %}
 
                                 {% block bepo_turbo_suggest_target_detail_category_field %}

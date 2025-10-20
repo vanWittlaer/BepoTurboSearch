@@ -6,6 +6,7 @@ use Bepo\TurboSuggest\Core\Content\SearchTarget\Aggregate\SearchTargetTranslatio
 use Bepo\TurboSuggest\Core\Content\SearchTerm\SearchTermCollection;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\Cms\CmsPageEntity;
+use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
@@ -18,6 +19,8 @@ class SearchTargetEntity extends Entity
 
     protected ?string $cmsPageId = null;
 
+    protected ?string $mediaId = null;
+
     protected string $salesChannelId;
 
     protected int $priority = 0;
@@ -25,6 +28,8 @@ class SearchTargetEntity extends Entity
     protected ?CategoryEntity $category = null;
 
     protected ?CmsPageEntity $cmsPage = null;
+
+    protected ?MediaEntity $media = null;
 
     protected ?SalesChannelEntity $salesChannel = null;
 
@@ -112,6 +117,26 @@ class SearchTargetEntity extends Entity
     public function setCmsPage(?CmsPageEntity $cmsPage): void
     {
         $this->cmsPage = $cmsPage;
+    }
+
+    public function getMediaId(): ?string
+    {
+        return $this->mediaId;
+    }
+
+    public function setMediaId(?string $mediaId): void
+    {
+        $this->mediaId = $mediaId;
+    }
+
+    public function getMedia(): ?MediaEntity
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?MediaEntity $media): void
+    {
+        $this->media = $media;
     }
 
     public function getSalesChannel(): ?SalesChannelEntity

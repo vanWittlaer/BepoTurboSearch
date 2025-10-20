@@ -12,7 +12,16 @@
             "columnCmsPage": "Landing Page",
             "columnSalesChannel": "Sales Channel",
             "columnActive": "Active",
-            "columnPriority": "Priority"
+            "columnPriority": "Priority",
+            "contextMenuEdit": "Edit",
+            "contextMenuDelete": "Delete",
+            "deleteModalTitle": "Delete search target",
+            "deleteModalMessage": "Are you sure you want to delete this search target? All associated search terms will also be deleted.",
+            "deleteModalCancel": "Cancel",
+            "deleteModalConfirm": "Delete",
+            "deleteSuccessMessage": "Search target deleted successfully",
+            "deleteErrorMessage": "Error deleting search target",
+            "actionsDisabledInLanguage": "Search targets can only be created in the system default language."
         },
         "detail": {
             "title": "New search target",
@@ -21,6 +30,8 @@
             "tabSearchTerms": "Search Terms",
             "labelTitle": "Title",
             "labelTeaserText": "Teaser Text",
+            "labelDisplayImage": "Display Image",
+            "helpTextDisplayImage": "Image displayed in search suggest dropdown (like product images)",
             "labelCategory": "Category",
             "labelCmsPage": "Landing Page",
             "labelSalesChannel": "Sales Channel",

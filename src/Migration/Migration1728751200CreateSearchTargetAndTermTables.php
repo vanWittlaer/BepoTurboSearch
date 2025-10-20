@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS `bepo_turbo_suggest_target` (
     `id` BINARY(16) NOT NULL,
     `category_id` BINARY(16) NULL,
     `cms_page_id` BINARY(16) NULL,
+    `media_id` BINARY(16) NULL,
     `sales_channel_id` BINARY(16) NOT NULL,
     `priority` INT(11) NOT NULL DEFAULT 0,
     `created_at` DATETIME(3) NOT NULL,
@@ -26,9 +27,12 @@ CREATE TABLE IF NOT EXISTS `bepo_turbo_suggest_target` (
     PRIMARY KEY (`id`),
     KEY `fk.bepo_turbo_suggest_target.category_id` (`category_id`),
     KEY `fk.bepo_turbo_suggest_target.cms_page_id` (`cms_page_id`),
+    KEY `fk.bepo_turbo_suggest_target.media_id` (`media_id`),
     KEY `fk.bepo_turbo_suggest_target.sales_channel_id` (`sales_channel_id`),
     CONSTRAINT `fk.bepo_turbo_suggest_target.sales_channel_id`
-        FOREIGN KEY (`sales_channel_id`) REFERENCES `sales_channel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+        FOREIGN KEY (`sales_channel_id`) REFERENCES `sales_channel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT `fk.bepo_turbo_suggest_target.media_id`
+        FOREIGN KEY (`media_id`) REFERENCES `media` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 SQL;
         $connection->executeStatement($sql);
@@ -49,17 +53,6 @@ CREATE TABLE IF NOT EXISTS `bepo_turbo_suggest_target_translation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 SQL;
         $connection->executeStatement($sql);
-
-        // Add teaser_text column if table already exists
-        $columnExists = $connection->fetchOne(
-            "SHOW COLUMNS FROM `bepo_turbo_suggest_target_translation` LIKE 'teaser_text'"
-        );
-
-        if (!$columnExists) {
-            $connection->executeStatement(
-                'ALTER TABLE `bepo_turbo_suggest_target_translation` ADD COLUMN `teaser_text` TEXT NULL AFTER `title`'
-            );
-        }
 
         $sql = <<<SQL
 CREATE TABLE IF NOT EXISTS `bepo_turbo_suggest_term` (

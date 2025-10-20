@@ -4,7 +4,7 @@ namespace Bepo\TurboSuggest\Core\Content\SearchTarget\Aggregate\SearchTargetTran
 
 use Bepo\TurboSuggest\Core\Content\SearchTarget\SearchTargetDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
@@ -28,7 +28,7 @@ class SearchTargetTranslationDefinition extends EntityTranslationDefinition
         return SearchTargetTranslationCollection::class;
     }
 
-    public function getParentDefinitionClass(): string
+    protected function getParentDefinitionClass(): string
     {
         return SearchTargetDefinition::class;
     }
@@ -36,8 +36,8 @@ class SearchTargetTranslationDefinition extends EntityTranslationDefinition
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
-            new StringField('title', 'title'),
-            new LongTextField('teaser_text', 'teaserText'),
+            (new StringField('title', 'title'))->addFlags(new ApiAware()),
+            (new LongTextField('teaser_text', 'teaserText'))->addFlags(new ApiAware()),
         ]);
     }
 }

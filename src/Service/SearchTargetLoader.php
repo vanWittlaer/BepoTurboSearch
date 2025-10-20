@@ -36,7 +36,8 @@ class SearchTargetLoader
 
         $exactCriteria->getAssociation('searchTarget')
             ->addFilter(new EqualsFilter('salesChannelId', $context->getSalesChannelId()))
-            ->addSorting(new FieldSorting('priority', 'DESC'));
+            ->addSorting(new FieldSorting('priority', 'DESC'))
+            ->addAssociation('media');
 
         $exactMatches = $this->bepoTurboSuggestTermRepository->search($exactCriteria, $context->getContext());
 
@@ -67,7 +68,8 @@ class SearchTargetLoader
 
         $criteria->getAssociation('searchTarget')
             ->addFilter(new EqualsFilter('salesChannelId', $context->getSalesChannelId()))
-            ->addSorting(new FieldSorting('priority', 'DESC'));
+            ->addSorting(new FieldSorting('priority', 'DESC'))
+            ->addAssociation('media');
 
         $result = $this->bepoTurboSuggestTermRepository->search($criteria, $context->getContext());
 

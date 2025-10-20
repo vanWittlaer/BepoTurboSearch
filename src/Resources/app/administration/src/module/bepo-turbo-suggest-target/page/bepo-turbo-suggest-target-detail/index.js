@@ -47,6 +47,10 @@ Component.register('bepo-turbo-suggest-target-detail', {
             return this.$route.params.id === 'create';
         },
 
+        isSystemDefaultLanguage() {
+            return Shopware.Context.api.languageId === Shopware.Context.api.systemLanguageId;
+        },
+
         ...mapPropertyErrors('searchTarget', [
             'salesChannelId'
         ]),

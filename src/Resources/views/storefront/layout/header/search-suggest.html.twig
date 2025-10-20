@@ -9,8 +9,29 @@
                 {% block layout_search_suggest_turbo_target_item %}
                     <li class="js-result" role="option">
                         <a href="{{ seoUrl('frontend.navigation.page', {'navigationId': target.categoryId ? target.categoryId : target.cmsPageId}) }}"
-                           class="btn btn-primary w-100 d-flex justify-content-between text-start mb-2"
+                           class="btn btn-primary w-100 d-flex align-items-center text-start mb-2"
                            title="{{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.cmsPage.name) }}">
+                            {% block layout_search_suggest_turbo_target_image %}
+                                {% if target.media and target.media.url %}
+                                    <div class="me-3" style="width: 50px; height: 50px; flex-shrink: 0;">
+                                        {% set attributes = {
+                                            class: 'rounded',
+                                            style: 'width: 50px; height: 50px; object-fit: cover;',
+                                            title: (target.media.translated.title ?: ''),
+                                            alt: (target.media.translated.alt ?: '')
+                                        } %}
+
+                                        {% sw_thumbnails 'turbo-suggest-target-image' with {
+                                            media: target.media,
+                                            sizes: {
+                                                default: '50px'
+                                            },
+                                            attributes: attributes
+                                        } %}
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
+
                             <div class="flex-grow-1">
                                 <div class="d-flex align-items-center">
                                     <div class="fw-bold flex-grow-1">
@@ -34,4 +55,13 @@
     {% endif %}
 
     {{ parent() }}
+{% endblock %}
+
+{% block layout_search_suggest_result_total %}
+    {% set turboTargets = page.getExtension('turboSuggestTargets') %}
+
+    {# Don't show "No results found" if we have turbo targets #}
+    {% if not (turboTargets and turboTargets|length > 0) %}
+        {{ parent() }}
+    {% endif %}
 {% endblock %}

@@ -2,7 +2,7 @@
     "name": "bepo/turbo-suggest",
     "description": "Enhance your search experience by displaying categories and landing pages prominently in the search suggestions, making it easier for customers to find what they're looking for.",
     "type": "shopware-platform-plugin",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "license": "MIT",
     "authors": [
         {

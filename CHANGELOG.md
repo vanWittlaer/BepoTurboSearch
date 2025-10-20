@@ -5,31 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.0.4] - 2025-10-20
 
 ### Added
-- Search statistics tracking: Automatically track which search terms customers use
-- Click-through rate analysis in admin statistics page
-- Statistics admin page showing:
-  - Search term frequency
-  - Click counts per search term
-  - Click-through rate percentage
-  - Last searched timestamp
-  - Sales channel breakdown
-- SearchStatisticLogger service for tracking search behavior
-- Database migration for search statistics table
+- Optional display image for search targets
 
-### Changed
-- SuggestPageLoadedSubscriber now logs all search queries automatically
+### Fixed
+- Creation of search targets now only possible in system default language
 
-## [0.0.3] - 2025-01-14
+## [0.0.3] - 2025-10-14
 
 ### Fixed
 - **MariaDB compatibility**: Removed foreign key constraints for category and cms_page tables due to versioning issues
 - Added indexes for category_id and cms_page_id to maintain query performance
 - Merged all migrations into single migration file for clean fresh installations
 
-## [0.0.1] - 2025-01-13
+## [0.0.1] - 2025-10-13
 
 ### Added
 - Initial plugin release
