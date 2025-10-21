@@ -9,7 +9,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\PrefixFilter;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 
 class SearchTargetLoader
@@ -32,12 +31,7 @@ class SearchTargetLoader
         $exactCriteria->addFilter(new EqualsFilter('term', $searchTerm));
         $exactCriteria->addFilter(new EqualsFilter('languageId', $context->getContext()->getLanguageId()));
         $exactCriteria->addFilter(new EqualsFilter('active', true));
-        $exactCriteria->addAssociation('searchTarget');
-
-        $exactCriteria->getAssociation('searchTarget')
-            ->addFilter(new EqualsFilter('salesChannelId', $context->getSalesChannelId()))
-            ->addSorting(new FieldSorting('priority', 'DESC'))
-            ->addAssociation('media');
+        $exactCriteria->addFilter(new EqualsFilter('searchTarget.salesChannelId', $context->getSalesChannelId()));
 
         $exactMatches = $this->bepoTurboSuggestTermRepository->search($exactCriteria, $context->getContext());
 
@@ -64,12 +58,7 @@ class SearchTargetLoader
         $criteria->addFilter(new PrefixFilter('term', $searchTerm));
         $criteria->addFilter(new EqualsFilter('languageId', $context->getContext()->getLanguageId()));
         $criteria->addFilter(new EqualsFilter('active', true));
-        $criteria->addAssociation('searchTarget');
-
-        $criteria->getAssociation('searchTarget')
-            ->addFilter(new EqualsFilter('salesChannelId', $context->getSalesChannelId()))
-            ->addSorting(new FieldSorting('priority', 'DESC'))
-            ->addAssociation('media');
+        $criteria->addFilter(new EqualsFilter('searchTarget.salesChannelId', $context->getSalesChannelId()));
 
         $result = $this->bepoTurboSuggestTermRepository->search($criteria, $context->getContext());
 
