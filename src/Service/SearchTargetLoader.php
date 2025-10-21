@@ -62,51 +62,16 @@ class SearchTargetLoader
 
         $result = $this->bepoTurboSuggestTermRepository->search($criteria, $context->getContext());
 
-        // Sort by term length (shortest first)
-        $terms = $result->getElements();
-        uasort($terms, static function (mixed $a, mixed $b): int {
-            if (!$a instanceof SearchTermEntity) {
-                return 0;
-            }
-            if (!$b instanceof SearchTermEntity) {
-                return 0;
-            }
-            $termA = $a->getTerm() ?? '';
-            $termB = $b->getTerm() ?? '';
-            $lenA = \strlen($termA);
-            $lenB = \strlen($termB);
-            if ($lenA === $lenB) {
-                return strcmp($termA, $termB);
-            }
-
-            return $lenA <=> $lenB;
-        });
-
-        // Collect all targets with the shortest matching term length
         $targets = new SearchTargetCollection();
-        $shortestLength = null;
 
-        foreach ($terms as $term) {
+        foreach ($result as $term) {
             if (!$term instanceof SearchTermEntity) {
                 continue;
             }
 
-            $termLength = \strlen($term->getTerm() ?? '');
-
-            // Set the shortest length on first iteration
-            if ($shortestLength === null) {
-                $shortestLength = $termLength;
-            }
-
-            // Only collect targets with the shortest term length
-            if ($termLength === $shortestLength) {
-                $target = $term->getSearchTarget();
-                if ($target instanceof SearchTargetEntity) {
-                    $targets->add($target);
-                }
-            } else {
-                // Since terms are sorted by length, we can break here
-                break;
+            $target = $term->getSearchTarget();
+            if ($target instanceof SearchTargetEntity) {
+                $targets->add($target);
             }
         }
 
