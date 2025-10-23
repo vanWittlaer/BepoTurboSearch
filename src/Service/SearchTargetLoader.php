@@ -26,34 +26,6 @@ class SearchTargetLoader
             return new SearchTargetCollection();
         }
 
-        // Priority 1: Exact match
-        $exactCriteria = new Criteria();
-        $exactCriteria->addFilter(new EqualsFilter('term', $searchTerm));
-        $exactCriteria->addFilter(new EqualsFilter('languageId', $context->getContext()->getLanguageId()));
-        $exactCriteria->addFilter(new EqualsFilter('active', true));
-        $exactCriteria->addFilter(new EqualsFilter('searchTarget.salesChannelId', $context->getSalesChannelId()));
-
-        $exactMatches = $this->bepoTurboSuggestTermRepository->search($exactCriteria, $context->getContext());
-
-        if ($exactMatches->count() > 0) {
-            $targets = new SearchTargetCollection();
-            foreach ($exactMatches as $exactMatch) {
-                if ($exactMatch instanceof SearchTermEntity) {
-                    $target = $exactMatch->getSearchTarget();
-                    if ($target instanceof SearchTargetEntity) {
-                        $targets->add($target);
-                    }
-                }
-            }
-            if ($targets->count() > 0) {
-                $targets->sort(function (SearchTargetEntity $a, SearchTargetEntity $b) {
-                    return $b->getPriority() <=> $a->getPriority();
-                });
-                return $targets;
-            }
-        }
-
-        // Priority 2: Prefix match
         $criteria = new Criteria();
         $criteria->addFilter(new PrefixFilter('term', $searchTerm));
         $criteria->addFilter(new EqualsFilter('languageId', $context->getContext()->getLanguageId()));
