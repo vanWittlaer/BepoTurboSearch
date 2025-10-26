@@ -39,6 +39,8 @@ class SearchTargetEntity extends Entity
 
     protected ?string $title = null;
 
+    protected ?string $teaserText = null;
+
     public function getTranslations(): ?SearchTargetTranslationCollection
     {
         return $this->translations;
@@ -57,6 +59,16 @@ class SearchTargetEntity extends Entity
     public function setTitle(?string $title): void
     {
         $this->title = $title;
+    }
+
+    public function getTeaserText(): ?string
+    {
+        return $this->teaserText;
+    }
+
+    public function setTeaserText(?string $teaserText): void
+    {
+        $this->teaserText = $teaserText;
     }
 
     public function getCategoryId(): ?string
