@@ -17,7 +17,7 @@ Dies hilft Kunden, direkt zur richtigen Kategorie oder Landing Page zu navigiere
 ## Funktionen
 
 - Kategorien in Suchvorschlägen anzeigen
-- Landing Pages (CMS-Seiten) in Suchvorschlägen anzeigen
+- Landing Pages in Suchvorschlägen anzeigen
 - Vollständig übersetzbare Titel und Teaser-Texte
 - Intelligente Suchlogik (exakte Übereinstimmung und Präfix-Übereinstimmung)
 - Prioritätsbasierte Sortierung (wichtigste Ergebnisse zuerst anzeigen)

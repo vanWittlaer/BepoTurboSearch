@@ -17,7 +17,7 @@ This helps customers navigate directly to the right category or landing page, im
 ## Features
 
 - Display categories in search suggestions
-- Display landing pages (CMS pages) in search suggestions
+- Display landing pages in search suggestions
 - Fully translatable titles and teaser texts
 - Smart search matching (exact match and prefix match)
 - Priority-based sorting (show most important results first)

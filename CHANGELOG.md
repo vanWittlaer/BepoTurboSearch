@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.9] - 2025-10-26
+
+### Changed
+- Replaced CmsPage references with LandingPageEntity for correct entity handling
+- Updated all PHP entity classes, definitions, and templates to use landing_page instead of cms_page
+- Renamed database column from cms_page_id to landing_page_id
+- Updated admin component translations and labels for consistency
+
 ## [0.0.8] - 2025-10-23
 
 ### Changed

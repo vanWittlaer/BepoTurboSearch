@@ -5,7 +5,7 @@ namespace Bepo\TurboSuggest\Core\Content\SearchTarget;
 use Bepo\TurboSuggest\Core\Content\SearchTarget\Aggregate\SearchTargetTranslation\SearchTargetTranslationDefinition;
 use Bepo\TurboSuggest\Core\Content\SearchTerm\SearchTermDefinition;
 use Shopware\Core\Content\Category\CategoryDefinition;
-use Shopware\Core\Content\Cms\CmsPageDefinition;
+use Shopware\Core\Content\LandingPage\LandingPageDefinition;
 use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
@@ -46,7 +46,7 @@ class SearchTargetDefinition extends EntityDefinition
             (new IdField('id', 'id'))->addFlags(new PrimaryKey(), new Required(), new ApiAware()),
 
             (new FkField('category_id', 'categoryId', CategoryDefinition::class))->addFlags(new ApiAware()),
-            (new FkField('cms_page_id', 'cmsPageId', CmsPageDefinition::class))->addFlags(new ApiAware()),
+            (new FkField('landing_page_id', 'landingPageId', LandingPageDefinition::class))->addFlags(new ApiAware()),
             (new FkField('media_id', 'mediaId', MediaDefinition::class))->addFlags(new ApiAware()),
 
             (new FkField('sales_channel_id', 'salesChannelId', SalesChannelDefinition::class))->addFlags(new Required(), new ApiAware()),
@@ -57,7 +57,7 @@ class SearchTargetDefinition extends EntityDefinition
             (new TranslatedField('teaserText'))->addFlags(new ApiAware()),
 
             (new ManyToOneAssociationField('category', 'category_id', CategoryDefinition::class, 'id', true))->addFlags(new ApiAware()),
-            (new ManyToOneAssociationField('cmsPage', 'cms_page_id', CmsPageDefinition::class, 'id', true))->addFlags(new ApiAware()),
+            (new ManyToOneAssociationField('landingPage', 'landing_page_id', LandingPageDefinition::class, 'id', true))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('media', 'media_id', MediaDefinition::class, 'id', true))->addFlags(new ApiAware()),
             (new ManyToOneAssociationField('salesChannel', 'sales_channel_id', SalesChannelDefinition::class, 'id', false))->addFlags(new ApiAware()),
 

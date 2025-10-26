@@ -85,11 +85,11 @@ Component.register('bepo-turbo-suggest-target-detail', {
     watch: {
         'searchTarget.categoryId'(newValue) {
             if (newValue) {
-                this.searchTarget.cmsPageId = null;
+                this.searchTarget.landingPageId = null;
             }
         },
 
-        'searchTarget.cmsPageId'(newValue) {
+        'searchTarget.landingPageId'(newValue) {
             if (newValue) {
                 this.searchTarget.categoryId = null;
             }
@@ -114,7 +114,7 @@ Component.register('bepo-turbo-suggest-target-detail', {
 
             const criteria = new Criteria();
             criteria.addAssociation('category');
-            criteria.addAssociation('cmsPage');
+            criteria.addAssociation('landingPage');
             criteria.addAssociation('salesChannel');
             criteria.addAssociation('searchTerms.language');
 

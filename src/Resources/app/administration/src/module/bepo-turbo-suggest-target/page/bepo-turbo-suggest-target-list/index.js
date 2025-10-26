@@ -51,9 +51,9 @@ Component.register('bepo-turbo-suggest-target-list', {
                     allowResize: true
                 },
                 {
-                    property: 'cmsPage.name',
-                    dataIndex: 'cmsPage.name',
-                    label: this.$tc('bepo-turbo-suggest.list.columnCmsPage'),
+                    property: 'landingPage.name',
+                    dataIndex: 'landingPage.name',
+                    label: this.$tc('bepo-turbo-suggest.list.columnLandingPage'),
                     allowResize: true
                 },
                 {
@@ -89,7 +89,7 @@ Component.register('bepo-turbo-suggest-target-list', {
             const criteria = new Criteria(this.page, this.limit);
             criteria.addSorting(Criteria.sort(this.sortBy, this.sortDirection));
             criteria.addAssociation('category');
-            criteria.addAssociation('cmsPage');
+            criteria.addAssociation('landingPage');
             criteria.addAssociation('salesChannel');
             criteria.addAssociation('searchTerms');
 

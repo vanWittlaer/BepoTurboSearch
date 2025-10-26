@@ -80,18 +80,18 @@
                                         :label="$tc('bepo-turbo-suggest.detail.labelCategory')"
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderCategory')"
                                         :helpText="$tc('bepo-turbo-suggest.detail.helpTextCategory')"
-                                        :disabled="!!searchTarget.cmsPageId"
+                                        :disabled="!!searchTarget.landingPageId"
                                         show-clearable-button>
                                     </sw-entity-single-select>
                                 {% endblock %}
 
-                                {% block bepo_turbo_suggest_target_detail_cms_page_field %}
+                                {% block bepo_turbo_suggest_target_detail_landing_page_field %}
                                     <sw-entity-single-select
-                                        v-model:value="searchTarget.cmsPageId"
-                                        entity="cms_page"
-                                        :label="$tc('bepo-turbo-suggest.detail.labelCmsPage')"
-                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderCmsPage')"
-                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextCmsPage')"
+                                        v-model:value="searchTarget.landingPageId"
+                                        entity="landing_page"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelLandingPage')"
+                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderLandingPage')"
+                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextLandingPage')"
                                         :disabled="!!searchTarget.categoryId"
                                         show-clearable-button>
                                     </sw-entity-single-select>

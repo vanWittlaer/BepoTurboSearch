@@ -8,9 +8,9 @@
             {% for target in turboTargets %}
                 {% block layout_search_suggest_turbo_target_item %}
                     <li class="js-result" role="option">
-                        <a href="{{ seoUrl('frontend.navigation.page', {'navigationId': target.categoryId ? target.categoryId : target.cmsPageId}) }}"
+                        <a href="{{ target.categoryId ? seoUrl('frontend.navigation.page', {'navigationId': target.categoryId}) : seoUrl('frontend.landing.page', {'landingPageId': target.landingPageId}) }}"
                            class="btn btn-primary w-100 d-flex align-items-center text-start mb-2"
-                           title="{{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.cmsPage.name) }}">
+                           title="{{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.landingPage.name) }}">
                             {% block layout_search_suggest_turbo_target_image %}
                                 {% if target.media and target.media.url %}
                                     <div class="me-3" style="width: 50px; height: 50px; flex-shrink: 0;">
@@ -35,7 +35,7 @@
                             <div class="flex-grow-1">
                                 <div class="d-flex align-items-center">
                                     <div class="fw-bold flex-grow-1">
-                                        {{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.cmsPage.name) }}
+                                        {{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.landingPage.name) }}
                                     </div>
                                     <div class="ms-3">
                                         {% sw_icon 'arrow-medium-right' style { size: 'sm', pack: 'solid' } %}

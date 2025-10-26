@@ -5,7 +5,7 @@ namespace Bepo\TurboSuggest\Core\Content\SearchTarget;
 use Bepo\TurboSuggest\Core\Content\SearchTarget\Aggregate\SearchTargetTranslation\SearchTargetTranslationCollection;
 use Bepo\TurboSuggest\Core\Content\SearchTerm\SearchTermCollection;
 use Shopware\Core\Content\Category\CategoryEntity;
-use Shopware\Core\Content\Cms\CmsPageEntity;
+use Shopware\Core\Content\LandingPage\LandingPageEntity;
 use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
@@ -17,7 +17,7 @@ class SearchTargetEntity extends Entity
 
     protected ?string $categoryId = null;
 
-    protected ?string $cmsPageId = null;
+    protected ?string $landingPageId = null;
 
     protected ?string $mediaId = null;
 
@@ -27,7 +27,7 @@ class SearchTargetEntity extends Entity
 
     protected ?CategoryEntity $category = null;
 
-    protected ?CmsPageEntity $cmsPage = null;
+    protected ?LandingPageEntity $landingPage = null;
 
     protected ?MediaEntity $media = null;
 
@@ -69,14 +69,14 @@ class SearchTargetEntity extends Entity
         $this->categoryId = $categoryId;
     }
 
-    public function getCmsPageId(): ?string
+    public function getLandingPageId(): ?string
     {
-        return $this->cmsPageId;
+        return $this->landingPageId;
     }
 
-    public function setCmsPageId(?string $cmsPageId): void
+    public function setLandingPageId(?string $landingPageId): void
     {
-        $this->cmsPageId = $cmsPageId;
+        $this->landingPageId = $landingPageId;
     }
 
     public function getSalesChannelId(): string
@@ -109,14 +109,14 @@ class SearchTargetEntity extends Entity
         $this->category = $category;
     }
 
-    public function getCmsPage(): ?CmsPageEntity
+    public function getLandingPage(): ?LandingPageEntity
     {
-        return $this->cmsPage;
+        return $this->landingPage;
     }
 
-    public function setCmsPage(?CmsPageEntity $cmsPage): void
+    public function setLandingPage(?LandingPageEntity $landingPage): void
     {
-        $this->cmsPage = $cmsPage;
+        $this->landingPage = $landingPage;
     }
 
     public function getMediaId(): ?string
