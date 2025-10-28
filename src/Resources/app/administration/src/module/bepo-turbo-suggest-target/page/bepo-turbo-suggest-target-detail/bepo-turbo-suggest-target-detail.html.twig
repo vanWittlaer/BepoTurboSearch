@@ -52,7 +52,8 @@
                                         v-model:value="searchTarget.title"
                                         :label="$tc('bepo-turbo-suggest.detail.labelTitle')"
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTitle')"
-                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextTitle')">
+                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextTitle')"
+                                        :error="searchTargetTitleError">
                                     </sw-text-field>
                                 {% endblock %}
 
@@ -60,7 +61,8 @@
                                     <sw-text-field
                                         v-model:value="searchTarget.teaserText"
                                         :label="$tc('bepo-turbo-suggest.detail.labelTeaserText')"
-                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTeaserText')">
+                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderTeaserText')"
+                                        :error="searchTargetTeaserTextError">
                                     </sw-text-field>
                                 {% endblock %}
 
@@ -69,6 +71,7 @@
                                         v-model:value="searchTarget.mediaId"
                                         :label="$tc('bepo-turbo-suggest.detail.labelDisplayImage')"
                                         :helpText="$tc('bepo-turbo-suggest.detail.helpTextDisplayImage')"
+                                        :error="searchTargetMediaIdError"
                                         show-default-actions>
                                     </sw-media-field>
                                 {% endblock %}
@@ -80,6 +83,7 @@
                                         :label="$tc('bepo-turbo-suggest.detail.labelCategory')"
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderCategory')"
                                         :helpText="$tc('bepo-turbo-suggest.detail.helpTextCategory')"
+                                        :error="searchTargetCategoryIdError"
                                         :disabled="!!searchTarget.landingPageId"
                                         show-clearable-button>
                                     </sw-entity-single-select>
@@ -92,6 +96,7 @@
                                         :label="$tc('bepo-turbo-suggest.detail.labelLandingPage')"
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderLandingPage')"
                                         :helpText="$tc('bepo-turbo-suggest.detail.helpTextLandingPage')"
+                                        :error="searchTargetLandingPageIdError"
                                         :disabled="!!searchTarget.categoryId"
                                         show-clearable-button>
                                     </sw-entity-single-select>
@@ -103,7 +108,7 @@
                                         entity="sales_channel"
                                         :label="$tc('bepo-turbo-suggest.detail.labelSalesChannel')"
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderSalesChannel')"
-                                        :error="salesChannelIdError"
+                                        :error="searchTargetSalesChannelIdError"
                                         required>
                                     </sw-entity-single-select>
                                 {% endblock %}
@@ -113,6 +118,7 @@
                                         v-model:value="searchTarget.priority"
                                         :label="$tc('bepo-turbo-suggest.detail.labelPriority')"
                                         :helpText="$tc('bepo-turbo-suggest.detail.helpTextPriority')"
+                                        :error="searchTargetPriorityError"
                                         numberType="int">
                                     </sw-number-field>
                                 {% endblock %}

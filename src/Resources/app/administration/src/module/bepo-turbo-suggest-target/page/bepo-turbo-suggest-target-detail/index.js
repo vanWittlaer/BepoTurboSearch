@@ -52,7 +52,13 @@ Component.register('bepo-turbo-suggest-target-detail', {
         },
 
         ...mapPropertyErrors('searchTarget', [
-            'salesChannelId'
+            'title',
+            'teaserText',
+            'mediaId',
+            'categoryId',
+            'landingPageId',
+            'salesChannelId',
+            'priority'
         ]),
 
         termColumns() {
@@ -128,22 +134,21 @@ Component.register('bepo-turbo-suggest-target-detail', {
         onSave() {
             this.isLoading = true;
 
-            this.searchTargetRepository.save(this.searchTarget).then(() => {
-                this.isLoading = false;
-                this.isSaveSuccessful = true;
+            return this.searchTargetRepository.save(this.searchTarget, Shopware.Context.api)
+                .then(() => {
+                    this.isSaveSuccessful = true;
+                    this.isLoading = false;
 
-                if (this.isCreateMode) {
-                    this.$router.push({ name: 'bepo.turbo.suggest.target.detail', params: { id: this.searchTarget.id } });
-                    return;
-                }
+                    if (this.isCreateMode) {
+                        this.$router.push({ name: 'bepo.turbo.suggest.target.detail', params: { id: this.searchTarget.id } });
+                        return;
+                    }
 
-                this.loadEntityData();
-            }).catch(() => {
-                this.isLoading = false;
-                this.createNotificationError({
-                    message: this.$tc('global.notification.notificationSaveErrorMessageRequiredFieldsInvalid')
+                    this.loadEntityData();
+                })
+                .catch(() => {
+                    this.isLoading = false;
                 });
-            });
         },
 
         onCancel() {
