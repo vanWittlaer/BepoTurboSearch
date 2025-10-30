@@ -122,6 +122,7 @@ Component.register('bepo-turbo-suggest-target-detail', {
             criteria.addAssociation('category');
             criteria.addAssociation('landingPage');
             criteria.addAssociation('salesChannel');
+            criteria.addAssociation('media');
             criteria.addAssociation('searchTerms.language');
 
             this.searchTargetRepository.get(this.$route.params.id, Shopware.Context.api, criteria)

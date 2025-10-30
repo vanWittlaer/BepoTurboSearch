@@ -1,3 +1,4 @@
+import './bepo-turbo-suggest-target.scss';
 import './page/bepo-turbo-suggest-target-list';
 import './page/bepo-turbo-suggest-target-detail';
 import deDE from './snippet/de-DE.json';
@@ -10,7 +11,6 @@ Module.register('bepo-turbo-suggest-target', {
     name: 'TurboSuggest',
     title: 'bepo-turbo-suggest.general.mainMenuItemGeneral',
     description: 'bepo-turbo-suggest.general.descriptionTextModule',
-    color: '#ff3d58',
     icon: 'regular-search',
 
     routes: {
@@ -33,7 +33,6 @@ Module.register('bepo-turbo-suggest-target', {
     navigation: [{
         id: 'bepo-turbo-suggest-target',
         label: 'bepo-turbo-suggest.general.mainMenuItemGeneral',
-        color: '#ff3d58',
         icon: 'regular-search',
         path: 'bepo.turbo.suggest.target.list',
         parent: 'sw-marketing',

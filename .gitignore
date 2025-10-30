@@ -11,13 +11,12 @@ auth.json
 *~
 .DS_Store
 
-# Build artifacts (Administration & Storefront)
-/src/Resources/public/administration/
-/src/Resources/public/storefront/
+# Build artifacts
+/src/Resources/public/
 /src/Resources/app/administration/dist/
 /src/Resources/app/storefront/dist/
 
-# Node modules (if using npm/yarn for development)
+# Node modules
 node_modules/
 package-lock.json
 yarn.lock
