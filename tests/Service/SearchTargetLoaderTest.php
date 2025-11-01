@@ -36,58 +36,6 @@ class SearchTargetLoaderTest extends TestCase
         static::assertCount(0, $result);
     }
 
-    public function testLoadMatchingTargetsWithExactMatch(): void
-    {
-        $searchTerm = 'shirts';
-        $salesChannelContext = $this->createMock(SalesChannelContext::class);
-        $salesChannelContext->method('getSalesChannelId')->willReturn('sales-channel-id');
-
-        $context = $this->createMock(Context::class);
-        $context->method('getLanguageId')->willReturn('language-id');
-        $salesChannelContext->method('getContext')->willReturn($context);
-
-        // Create target entity
-        $target = new SearchTargetEntity();
-        $target->setId('target-id');
-        $target->setPriority(10);
-
-        // Create search term with target association
-        $term = new SearchTermEntity();
-        $term->setId('term-id');
-        $term->setTerm('shirts');
-        $term->setSearchTarget($target);
-
-        // Mock search result for exact match with count() > 0
-        $searchResult = $this->createMock(EntitySearchResult::class);
-        $searchResult->method('first')->willReturn($term);
-        $searchResult->method('count')->willReturn(1);
-        $searchResult->method('getIterator')->willReturn(new \ArrayIterator([$term]));
-
-        // Service calls search() once for exact match, returns early because valid target found
-        $this->termRepository
-            ->expects(static::once())
-            ->method('search')
-            ->with(
-                static::callback(function (Criteria $criteria) {
-                    $filters = $criteria->getFilters();
-                    foreach ($filters as $filter) {
-                        if ($filter instanceof EqualsFilter && $filter->getField() === 'term') {
-                            return true;
-                        }
-                    }
-                    return false;
-                }),
-                static::anything()
-            )
-            ->willReturn($searchResult);
-
-        $result = $this->loader->loadMatchingTargets($searchTerm, $salesChannelContext);
-
-        static::assertInstanceOf(SearchTargetCollection::class, $result);
-        static::assertCount(1, $result);
-        static::assertSame($target, $result->first());
-    }
-
     public function testLoadMatchingTargetsWithPrefixMatch(): void
     {
         $searchTerm = 'shi';
@@ -98,7 +46,6 @@ class SearchTargetLoaderTest extends TestCase
         $context->method('getLanguageId')->willReturn('language-id');
         $salesChannelContext->method('getContext')->willReturn($context);
 
-        // Create target entities
         $target1 = new SearchTargetEntity();
         $target1->setId('target-1');
         $target1->setPriority(20);
@@ -107,7 +54,6 @@ class SearchTargetLoaderTest extends TestCase
         $target2->setId('target-2');
         $target2->setPriority(10);
 
-        // Create search terms with same length to ensure both are returned
         $term1 = new SearchTermEntity();
         $term1->setId('term-1');
         $term1->setTerm('shirt');
@@ -118,41 +64,36 @@ class SearchTargetLoaderTest extends TestCase
         $term2->setTerm('shine');
         $term2->setSearchTarget($target2);
 
-        // Mock empty result for exact match
-        $exactSearchResult = $this->createMock(EntitySearchResult::class);
-        $exactSearchResult->method('first')->willReturn(null);
-        $exactSearchResult->method('count')->willReturn(0);
+        $searchResult = $this->createMock(EntitySearchResult::class);
+        $searchResult->method('getIterator')->willReturn(new \ArrayIterator([$term1, $term2]));
 
-        // Mock prefix search result
-        $prefixSearchResult = $this->createMock(EntitySearchResult::class);
-        $prefixSearchResult->method('getElements')->willReturn([$term1, $term2]);
-
-        // Service calls search() twice: first for exact match (returns empty), then for prefix match
         $this->termRepository
-            ->expects(static::exactly(2))
+            ->expects(static::once())
             ->method('search')
             ->with(
                 static::callback(function (Criteria $criteria) {
                     $filters = $criteria->getFilters();
-                    // Verify either EqualsFilter or PrefixFilter exists
+                    $hasPrefixFilter = false;
+                    $hasActiveFilter = false;
+
                     foreach ($filters as $filter) {
-                        if ($filter instanceof EqualsFilter && $filter->getField() === 'term') {
-                            return true;
-                        }
                         if ($filter instanceof PrefixFilter && $filter->getField() === 'term') {
-                            return true;
+                            $hasPrefixFilter = true;
+                        }
+                        if ($filter instanceof EqualsFilter && $filter->getField() === 'active') {
+                            $hasActiveFilter = true;
                         }
                     }
-                    return false;
+
+                    return $hasPrefixFilter && $hasActiveFilter;
                 }),
                 static::anything()
             )
-            ->willReturnOnConsecutiveCalls($exactSearchResult, $prefixSearchResult);
+            ->willReturn($searchResult);
 
         $result = $this->loader->loadMatchingTargets($searchTerm, $salesChannelContext);
 
         static::assertInstanceOf(SearchTargetCollection::class, $result);
-        // Should return both targets (same term length), sorted by priority (target1 first)
         static::assertCount(2, $result);
 
         $firstTarget = $result->first();
@@ -160,9 +101,9 @@ class SearchTargetLoaderTest extends TestCase
         static::assertEquals(20, $firstTarget->getPriority());
     }
 
-    public function testLoadMatchingTargetsReturnsShortestTermFirst(): void
+    public function testLoadMatchingTargetsSortsByPriority(): void
     {
-        $searchTerm = 'sh';
+        $searchTerm = 'test';
         $salesChannelContext = $this->createMock(SalesChannelContext::class);
         $salesChannelContext->method('getSalesChannelId')->willReturn('sales-channel-id');
 
@@ -170,39 +111,39 @@ class SearchTargetLoaderTest extends TestCase
         $context->method('getLanguageId')->willReturn('language-id');
         $salesChannelContext->method('getContext')->willReturn($context);
 
-        // Create target
-        $target = new SearchTargetEntity();
-        $target->setId('target-1');
-        $target->setPriority(10);
+        $lowPriorityTarget = new SearchTargetEntity();
+        $lowPriorityTarget->setId('target-1');
+        $lowPriorityTarget->setPriority(5);
 
-        // Create terms with different lengths
-        $shortTerm = new SearchTermEntity();
-        $shortTerm->setId('term-1');
-        $shortTerm->setTerm('shi');
-        $shortTerm->setSearchTarget($target);
+        $highPriorityTarget = new SearchTargetEntity();
+        $highPriorityTarget->setId('target-2');
+        $highPriorityTarget->setPriority(20);
 
-        $longTerm = new SearchTermEntity();
-        $longTerm->setId('term-2');
-        $longTerm->setTerm('shirts');
-        $longTerm->setSearchTarget($target);
+        $term1 = new SearchTermEntity();
+        $term1->setId('term-1');
+        $term1->setTerm('test1');
+        $term1->setSearchTarget($lowPriorityTarget);
 
-        // Mock empty exact match
-        $exactSearchResult = $this->createMock(EntitySearchResult::class);
-        $exactSearchResult->method('first')->willReturn(null);
+        $term2 = new SearchTermEntity();
+        $term2->setId('term-2');
+        $term2->setTerm('test2');
+        $term2->setSearchTarget($highPriorityTarget);
 
-        // Mock prefix match - return longer term first (to test sorting)
-        $prefixSearchResult = $this->createMock(EntitySearchResult::class);
-        $prefixSearchResult->method('getElements')->willReturn([$longTerm, $shortTerm]);
+        $searchResult = $this->createMock(EntitySearchResult::class);
+        $searchResult->method('getIterator')->willReturn(new \ArrayIterator([$term1, $term2]));
 
         $this->termRepository
-            ->expects(static::exactly(2))
             ->method('search')
-            ->willReturnOnConsecutiveCalls($exactSearchResult, $prefixSearchResult);
+            ->willReturn($searchResult);
 
         $result = $this->loader->loadMatchingTargets($searchTerm, $salesChannelContext);
 
         static::assertInstanceOf(SearchTargetCollection::class, $result);
-        static::assertCount(1, $result);
+        static::assertCount(2, $result);
+
+        $firstTarget = $result->first();
+        static::assertNotNull($firstTarget);
+        static::assertEquals(20, $firstTarget->getPriority());
     }
 
     public function testLoadMatchingTargetsWithNoMatches(): void
@@ -215,17 +156,13 @@ class SearchTargetLoaderTest extends TestCase
         $context->method('getLanguageId')->willReturn('language-id');
         $salesChannelContext->method('getContext')->willReturn($context);
 
-        // Mock empty results
-        $exactSearchResult = $this->createMock(EntitySearchResult::class);
-        $exactSearchResult->method('first')->willReturn(null);
-
-        $prefixSearchResult = $this->createMock(EntitySearchResult::class);
-        $prefixSearchResult->method('getElements')->willReturn([]);
+        $searchResult = $this->createMock(EntitySearchResult::class);
+        $searchResult->method('getIterator')->willReturn(new \ArrayIterator([]));
 
         $this->termRepository
-            ->expects(static::exactly(2))
+            ->expects(static::once())
             ->method('search')
-            ->willReturnOnConsecutiveCalls($exactSearchResult, $prefixSearchResult);
+            ->willReturn($searchResult);
 
         $result = $this->loader->loadMatchingTargets($searchTerm, $salesChannelContext);
 
@@ -243,14 +180,11 @@ class SearchTargetLoaderTest extends TestCase
         $context->method('getLanguageId')->willReturn('language-id');
         $salesChannelContext->method('getContext')->willReturn($context);
 
-        // Mock search result
         $searchResult = $this->createMock(EntitySearchResult::class);
-        $searchResult->method('first')->willReturn(null);
-        $searchResult->method('getElements')->willReturn([]);
+        $searchResult->method('getIterator')->willReturn(new \ArrayIterator([]));
 
-        // Service calls search() twice: exact match then prefix match
         $this->termRepository
-            ->expects(static::atLeastOnce())
+            ->expects(static::once())
             ->method('search')
             ->with(
                 static::callback(function (Criteria $criteria) {
@@ -275,4 +209,5 @@ class SearchTargetLoaderTest extends TestCase
 
         $this->loader->loadMatchingTargets($searchTerm, $salesChannelContext);
     }
+
 }

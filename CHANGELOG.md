@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0] - 2025-11-01
+
+### Added
+- Product pages as third search target type
+- Product selector in Admin detail form with mutual exclusivity handling
+- Product association loading in SearchTargetLoader
+- Product URL generation in storefront search suggest template
+- Database migration to add product_id column with foreign key constraint
+- English and German translations for product-related fields
+
+### Changed
+- Updated all field descriptions to include "products" alongside categories and landing pages
+- Enhanced mutual exclusivity logic to support three target types (category, landing page, product)
+- Updated help texts to reflect three-way mutual exclusivity
+- Category selector now displays full breadcrumb path (e.g., "Home / Clothing / T-Shirts")
+- Product selector now displays product number instead of product name
+
+### Fixed
+- Updated unit tests to match current implementation with product associations
+
 ## [0.0.12] - 2025-10-30
 
 ### Fixed

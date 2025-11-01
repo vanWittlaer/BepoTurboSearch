@@ -57,6 +57,7 @@ Component.register('bepo-turbo-suggest-target-detail', {
             'mediaId',
             'categoryId',
             'landingPageId',
+            'productId',
             'salesChannelId',
             'priority'
         ]),
@@ -92,12 +93,21 @@ Component.register('bepo-turbo-suggest-target-detail', {
         'searchTarget.categoryId'(newValue) {
             if (newValue) {
                 this.searchTarget.landingPageId = null;
+                this.searchTarget.productId = null;
             }
         },
 
         'searchTarget.landingPageId'(newValue) {
             if (newValue) {
                 this.searchTarget.categoryId = null;
+                this.searchTarget.productId = null;
+            }
+        },
+
+        'searchTarget.productId'(newValue) {
+            if (newValue) {
+                this.searchTarget.categoryId = null;
+                this.searchTarget.landingPageId = null;
             }
         }
     },
@@ -121,6 +131,7 @@ Component.register('bepo-turbo-suggest-target-detail', {
             const criteria = new Criteria();
             criteria.addAssociation('category');
             criteria.addAssociation('landingPage');
+            criteria.addAssociation('product');
             criteria.addAssociation('salesChannel');
             criteria.addAssociation('media');
             criteria.addAssociation('searchTerms.language');
