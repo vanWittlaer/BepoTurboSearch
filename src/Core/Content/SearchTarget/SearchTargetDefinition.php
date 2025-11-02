@@ -50,7 +50,7 @@ class SearchTargetDefinition extends EntityDefinition
             (new FkField('category_id', 'categoryId', CategoryDefinition::class))->addFlags(new ApiAware()),
             (new FkField('landing_page_id', 'landingPageId', LandingPageDefinition::class))->addFlags(new ApiAware()),
             (new FkField('product_id', 'productId', ProductDefinition::class))->addFlags(new ApiAware()),
-            (new ReferenceVersionField(ProductDefinition::class))->addFlags(new ApiAware()),
+            (new ReferenceVersionField(ProductDefinition::class, 'product_version_id'))->addFlags(new ApiAware(), new Required()),
             (new FkField('media_id', 'mediaId', MediaDefinition::class))->addFlags(new ApiAware()),
 
             (new FkField('sales_channel_id', 'salesChannelId', SalesChannelDefinition::class))->addFlags(new Required(), new ApiAware()),
