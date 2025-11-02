@@ -78,6 +78,12 @@
                                     </template>
                                 {% endblock %}
 
+                                {% block bepo_turbo_suggest_target_list_grid_column_product_number %}
+                                    <template #column-product.productNumber="{ item }">
+                                        {{ item.product ? item.product.productNumber : '-' }}
+                                    </template>
+                                {% endblock %}
+
                                 {% block bepo_turbo_suggest_target_list_grid_column_sales_channel %}
                                     <template #column-salesChannel.name="{ item }">
                                         {{ item.salesChannel ? item.salesChannel.translated.name : '-' }}

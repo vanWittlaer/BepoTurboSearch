@@ -17,6 +17,15 @@ class Migration1730400000CreateMediaFolder extends MigrationStep
 
     public function update(Connection $connection): void
     {
+        $existingDefaultFolder = $connection->fetchOne(
+            'SELECT id FROM media_default_folder WHERE entity = :entity',
+            ['entity' => 'bepo_turbo_suggest_target']
+        );
+
+        if ($existingDefaultFolder) {
+            return;
+        }
+
         $defaultFolderId = Uuid::randomBytes();
         $configurationId = Uuid::randomBytes();
 

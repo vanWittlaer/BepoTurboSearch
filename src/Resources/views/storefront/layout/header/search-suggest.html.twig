@@ -7,10 +7,21 @@
         {% block layout_search_suggest_turbo_targets %}
             {% for target in turboTargets %}
                 {% block layout_search_suggest_turbo_target_item %}
-                    <li class="js-result" role="option">
-                        <a href="{{ target.categoryId ? seoUrl('frontend.navigation.page', {'navigationId': target.categoryId}) : seoUrl('frontend.landing.page', {'landingPageId': target.landingPageId}) }}"
+                    {% if target.categoryId or target.landingPageId or target.productId %}
+                        <li class="js-result" role="option">
+                            {% if target.categoryId %}
+                                {% set targetUrl = seoUrl('frontend.navigation.page', {'navigationId': target.categoryId}) %}
+                                {% set targetTitle = target.translated.title ?: (target.category ? target.category.translated.name : '') %}
+                            {% elseif target.landingPageId %}
+                                {% set targetUrl = seoUrl('frontend.landing.page', {'landingPageId': target.landingPageId}) %}
+                                {% set targetTitle = target.translated.title ?: (target.landingPage ? target.landingPage.name : '') %}
+                            {% elseif target.productId %}
+                                {% set targetUrl = seoUrl('frontend.detail.page', {'productId': target.productId}) %}
+                                {% set targetTitle = target.translated.title ?: (target.product ? target.product.translated.name : '') %}
+                            {% endif %}
+                            <a href="{{ targetUrl }}"
                            class="btn btn-primary w-100 d-flex align-items-center text-start mb-2"
-                           title="{{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.landingPage.name) }}">
+                           title="{{ targetTitle }}">
                             {% block layout_search_suggest_turbo_target_image %}
                                 {% if target.media and target.media.url %}
                                     <div class="me-3" style="width: 50px; height: 50px; flex-shrink: 0;">
@@ -35,7 +46,7 @@
                             <div class="flex-grow-1">
                                 <div class="d-flex align-items-center">
                                     <div class="fw-bold flex-grow-1">
-                                        {{ target.translated.title ? target.translated.title : (target.category ? target.category.translated.name : target.landingPage.name) }}
+                                        {{ targetTitle }}
                                     </div>
                                     <div class="ms-3">
                                         {% sw_icon 'arrow-medium-right' style { size: 'sm', pack: 'solid' } %}
@@ -47,8 +58,9 @@
                                     </div>
                                 {% endif %}
                             </div>
-                        </a>
-                    </li>
+                            </a>
+                        </li>
+                    {% endif %}
                 {% endblock %}
             {% endfor %}
         {% endblock %}

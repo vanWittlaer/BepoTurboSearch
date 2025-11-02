@@ -85,7 +85,8 @@
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderCategory')"
                                         :helpText="$tc('bepo-turbo-suggest.detail.helpTextCategory')"
                                         :error="searchTargetCategoryIdError"
-                                        :disabled="!!searchTarget.landingPageId"
+                                        :disabled="!!searchTarget.landingPageId || !!searchTarget.productId"
+                                        labelProperty="breadcrumb"
                                         show-clearable-button>
                                     </sw-entity-single-select>
                                 {% endblock %}
@@ -98,7 +99,21 @@
                                         :placeholder="$tc('bepo-turbo-suggest.detail.placeholderLandingPage')"
                                         :helpText="$tc('bepo-turbo-suggest.detail.helpTextLandingPage')"
                                         :error="searchTargetLandingPageIdError"
-                                        :disabled="!!searchTarget.categoryId"
+                                        :disabled="!!searchTarget.categoryId || !!searchTarget.productId"
+                                        show-clearable-button>
+                                    </sw-entity-single-select>
+                                {% endblock %}
+
+                                {% block bepo_turbo_suggest_target_detail_product_field %}
+                                    <sw-entity-single-select
+                                        v-model:value="searchTarget.productId"
+                                        entity="product"
+                                        :label="$tc('bepo-turbo-suggest.detail.labelProduct')"
+                                        :placeholder="$tc('bepo-turbo-suggest.detail.placeholderProduct')"
+                                        :helpText="$tc('bepo-turbo-suggest.detail.helpTextProduct')"
+                                        :error="searchTargetProductIdError"
+                                        :disabled="!!searchTarget.categoryId || !!searchTarget.landingPageId"
+                                        labelProperty="productNumber"
                                         show-clearable-button>
                                     </sw-entity-single-select>
                                 {% endblock %}

@@ -7,6 +7,7 @@ use Bepo\TurboSuggest\Core\Content\SearchTerm\SearchTermCollection;
 use Shopware\Core\Content\Category\CategoryEntity;
 use Shopware\Core\Content\LandingPage\LandingPageEntity;
 use Shopware\Core\Content\Media\MediaEntity;
+use Shopware\Core\Content\Product\ProductEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 use Shopware\Core\System\SalesChannel\SalesChannelEntity;
@@ -19,6 +20,10 @@ class SearchTargetEntity extends Entity
 
     protected ?string $landingPageId = null;
 
+    protected ?string $productId = null;
+
+    protected ?string $productVersionId = null;
+
     protected ?string $mediaId = null;
 
     protected string $salesChannelId;
@@ -28,6 +33,8 @@ class SearchTargetEntity extends Entity
     protected ?CategoryEntity $category = null;
 
     protected ?LandingPageEntity $landingPage = null;
+
+    protected ?ProductEntity $product = null;
 
     protected ?MediaEntity $media = null;
 
@@ -129,6 +136,36 @@ class SearchTargetEntity extends Entity
     public function setLandingPage(?LandingPageEntity $landingPage): void
     {
         $this->landingPage = $landingPage;
+    }
+
+    public function getProductId(): ?string
+    {
+        return $this->productId;
+    }
+
+    public function setProductId(?string $productId): void
+    {
+        $this->productId = $productId;
+    }
+
+    public function getProductVersionId(): ?string
+    {
+        return $this->productVersionId;
+    }
+
+    public function setProductVersionId(?string $productVersionId): void
+    {
+        $this->productVersionId = $productVersionId;
+    }
+
+    public function getProduct(): ?ProductEntity
+    {
+        return $this->product;
+    }
+
+    public function setProduct(?ProductEntity $product): void
+    {
+        $this->product = $product;
     }
 
     public function getMediaId(): ?string

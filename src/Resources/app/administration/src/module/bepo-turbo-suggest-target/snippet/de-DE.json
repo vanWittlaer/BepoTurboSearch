@@ -2,7 +2,7 @@
     "bepo-turbo-suggest": {
         "general": {
             "mainMenuItemGeneral": "Turbo-Suchvorschläge",
-            "descriptionTextModule": "Verwalte Kategorien und Landing Pages in den Suchvorschlägen"
+            "descriptionTextModule": "Verwalte Kategorien, Landing Pages und Produkte in den Suchvorschlägen"
         },
         "list": {
             "title": "Turbo-Suchvorschläge",
@@ -10,6 +10,8 @@
             "columnTitle": "Titel",
             "columnCategory": "Kategorie",
             "columnLandingPage": "Landing Page",
+            "columnProduct": "Produkt",
+            "columnProductNumber": "Produktnummer",
             "columnSalesChannel": "Verkaufskanal",
             "columnActive": "Aktiv",
             "columnPriority": "Priorität",
@@ -34,18 +36,21 @@
             "helpTextDisplayImage": "Bild, das im Such-Dropdown angezeigt wird (wie Produktbilder)",
             "labelCategory": "Kategorie",
             "labelLandingPage": "Landing Page",
+            "labelProduct": "Produkt",
             "labelSalesChannel": "Verkaufskanal",
             "labelActive": "Aktiv",
             "labelPriority": "Priorität",
-            "placeholderTitle": "Überschreibt den Kategorie- oder Landing Page-Titel...",
+            "placeholderTitle": "Überschreibt den Kategorie-, Landing Page- oder Produkt-Titel...",
             "placeholderTeaserText": "Kurze Beschreibung für die Suchvorschläge...",
             "placeholderCategory": "Wähle eine Kategorie...",
             "placeholderLandingPage": "Wähle eine Landing Page...",
+            "placeholderProduct": "Wähle ein Produkt...",
             "placeholderSalesChannel": "Wähle einen Verkaufskanal...",
             "helpTextPriority": "Höhere Priorität = weiter oben in der Liste",
-            "helpTextTitle": "Optional: Überschreibt den Namen der Kategorie oder Landing Page in den Suchvorschlägen",
-            "helpTextCategory": "Wähle eine Kategorie ODER eine Landing Page (gegenseitig ausschließend)",
-            "helpTextLandingPage": "Wähle eine Landing Page ODER eine Kategorie (gegenseitig ausschließend)",
+            "helpTextTitle": "Optional: Überschreibt den Namen der Kategorie, Landing Page oder des Produkts in den Suchvorschlägen",
+            "helpTextCategory": "Wähle eine Kategorie, Landing Page ODER Produkt (gegenseitig ausschließend)",
+            "helpTextLandingPage": "Wähle eine Landing Page, Kategorie ODER Produkt (gegenseitig ausschließend)",
+            "helpTextProduct": "Wähle ein Produkt, Kategorie ODER Landing Page (gegenseitig ausschließend)",
             "buttonSave": "Speichern",
             "buttonCancel": "Abbrechen",
             "buttonAddTerm": "Suchbegriff hinzufügen",

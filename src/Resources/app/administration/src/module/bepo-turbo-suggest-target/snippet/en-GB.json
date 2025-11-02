@@ -2,7 +2,7 @@
     "bepo-turbo-suggest": {
         "general": {
             "mainMenuItemGeneral": "Turbo Search Suggests",
-            "descriptionTextModule": "Manage categories and landing pages in search suggestions"
+            "descriptionTextModule": "Manage categories, landing pages and products in search suggestions"
         },
         "list": {
             "title": "Turbo Search Suggests",
@@ -10,6 +10,8 @@
             "columnTitle": "Title",
             "columnCategory": "Category",
             "columnLandingPage": "Landing Page",
+            "columnProduct": "Product",
+            "columnProductNumber": "Product Number",
             "columnSalesChannel": "Sales Channel",
             "columnActive": "Active",
             "columnPriority": "Priority",
@@ -34,18 +36,21 @@
             "helpTextDisplayImage": "Image displayed in search suggest dropdown (like product images)",
             "labelCategory": "Category",
             "labelLandingPage": "Landing Page",
+            "labelProduct": "Product",
             "labelSalesChannel": "Sales Channel",
             "labelActive": "Active",
             "labelPriority": "Priority",
-            "placeholderTitle": "Overrides the category or landing page title...",
+            "placeholderTitle": "Overrides the category, landing page or product title...",
             "placeholderTeaserText": "Short description for search suggestions...",
             "placeholderCategory": "Select a category...",
             "placeholderLandingPage": "Select a landing page...",
+            "placeholderProduct": "Select a product...",
             "placeholderSalesChannel": "Select a sales channel...",
             "helpTextPriority": "Higher priority = higher in the list",
-            "helpTextTitle": "Optional: Overrides the category or landing page name in search suggestions",
-            "helpTextCategory": "Select a category OR a landing page (mutually exclusive)",
-            "helpTextLandingPage": "Select a landing page OR a category (mutually exclusive)",
+            "helpTextTitle": "Optional: Overrides the category, landing page or product name in search suggestions",
+            "helpTextCategory": "Select a category, landing page OR product (mutually exclusive)",
+            "helpTextLandingPage": "Select a landing page, category OR product (mutually exclusive)",
+            "helpTextProduct": "Select a product, category OR landing page (mutually exclusive)",
             "buttonSave": "Save",
             "buttonCancel": "Cancel",
             "buttonAddTerm": "Add search term",

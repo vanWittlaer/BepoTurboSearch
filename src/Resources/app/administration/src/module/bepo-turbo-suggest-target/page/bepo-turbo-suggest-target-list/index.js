@@ -57,6 +57,12 @@ Component.register('bepo-turbo-suggest-target-list', {
                     allowResize: true
                 },
                 {
+                    property: 'product.productNumber',
+                    dataIndex: 'product.productNumber',
+                    label: this.$tc('bepo-turbo-suggest.list.columnProductNumber'),
+                    allowResize: true
+                },
+                {
                     property: 'salesChannel.name',
                     dataIndex: 'salesChannel.name',
                     label: this.$tc('bepo-turbo-suggest.list.columnSalesChannel'),
@@ -90,6 +96,7 @@ Component.register('bepo-turbo-suggest-target-list', {
             criteria.addSorting(Criteria.sort(this.sortBy, this.sortDirection));
             criteria.addAssociation('category');
             criteria.addAssociation('landingPage');
+            criteria.addAssociation('product');
             criteria.addAssociation('salesChannel');
             criteria.addAssociation('searchTerms');
 
