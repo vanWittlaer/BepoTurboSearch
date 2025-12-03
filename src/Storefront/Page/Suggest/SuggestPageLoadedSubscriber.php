@@ -2,6 +2,7 @@
 
 namespace Bepo\TurboSuggest\Storefront\Page\Suggest;
 
+use Bepo\TurboSuggest\Service\ProductLikeMatchLoader;
 use Bepo\TurboSuggest\Service\SearchTargetLoader;
 use Shopware\Storefront\Page\Suggest\SuggestPageLoadedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -9,7 +10,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 readonly class SuggestPageLoadedSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private SearchTargetLoader $searchTargetLoader
+        private SearchTargetLoader $searchTargetLoader,
+        private ProductLikeMatchLoader $productLikeMatchLoader
     ) {
     }
 
@@ -28,11 +30,13 @@ readonly class SuggestPageLoadedSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $targets = $this->searchTargetLoader->loadMatchingTargets(
-            (string) $searchTerm,
-            $event->getSalesChannelContext()
-        );
+        $searchTermString = (string) $searchTerm;
+        $context = $event->getSalesChannelContext();
 
+        $targets = $this->searchTargetLoader->loadMatchingTargets($searchTermString, $context);
         $event->getPage()->addExtension('turboSuggestTargets', $targets);
+
+        $likeMatchedProducts = $this->productLikeMatchLoader->loadMatchingProducts($searchTermString, $context);
+        $event->getPage()->addExtension('turboLikeMatchedProducts', $likeMatchedProducts);
     }
 }

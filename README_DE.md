@@ -18,6 +18,7 @@ Dies hilft Kunden, direkt zur richtigen Kategorie oder Landing Page zu navigiere
 
 - Kategorien in Suchvorschlägen anzeigen
 - Landing Pages in Suchvorschlägen anzeigen
+- Produkte, deren Produktnummer den Suchbegriff enthält, werden mit höchster Priorität angezeigt (optional)
 - Vollständig übersetzbare Titel und Teaser-Texte
 - Intelligente Suchlogik (exakte Übereinstimmung und Präfix-Übereinstimmung)
 - Prioritätsbasierte Sortierung (wichtigste Ergebnisse zuerst anzeigen)
@@ -135,6 +136,31 @@ Wenn mehrere Ziele übereinstimmen:
 - Suchbegriffe: "hemden"
 
 **Ergebnis**: Wenn Kunden "hemden" eingeben, erscheinen beide Kategorien, mit "Damenhemden" zuerst (höhere Priorität).
+
+## Produktnummer LIKE-Suche
+
+Zusätzlich zu Kategorie- und Landing Page-Vorschlägen kann das Plugin auch Produkte anhand ihrer Produktnummer mit einer LIKE-Suche finden.
+
+### So funktioniert es
+
+Wenn ein Kunde einen Suchbegriff eingibt, sucht das Plugin nach Produkten, deren Produktnummer den Suchbegriff enthält (SQL LIKE '%suchbegriff%'). Übereinstimmende Produkte werden in einem hervorgehobenen Bereich über den regulären Suchergebnissen angezeigt:
+
+- Produktnummer und Name (z.B. "4711.00 Hauptprodukt")
+- Produktbild
+- Produktpreis
+
+### Konfiguration
+
+Navigiere zu **Einstellungen → System → Plugins → Turbo-Suchvorschläge** um zu konfigurieren:
+
+- **LIKE-Produktsuche aktivieren**: Diese Funktion ein-/ausschalten (Standard: aktiviert)
+- **Minimale Suchbegrifflänge**: Minimale Zeichenanzahl bevor die LIKE-Suche aktiviert wird (Standard: 3)
+
+### Beispiel
+
+Bei Produkten mit Nummern wie "ABC-1001", "ABC-1002", "ABC-2001":
+- Kunde tippt "ABC-1" → Zeigt Produkte "ABC-1001" und "ABC-1002"
+- Kunde tippt "ABC" → Zeigt alle drei Produkte
 
 ## Best Practices
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+    <card>
+        <title>LIKE Product Matching</title>
+        <title lang="de-DE">LIKE-Produktsuche</title>
+
+        <input-field type="bool">
+            <name>likeMatchEnabled</name>
+            <label>Enable LIKE product matching</label>
+            <label lang="de-DE">LIKE-Produktsuche aktivieren</label>
+            <helpText>When enabled, products will be matched against the product number using SQL LIKE '%search-term%' and displayed with highest priority.</helpText>
+            <helpText lang="de-DE">Wenn aktiviert, werden Produkte anhand der Produktnummer mit SQL LIKE '%suchbegriff%' abgeglichen und mit höchster Priorität angezeigt.</helpText>
+            <defaultValue>false</defaultValue>
+        </input-field>
+
+        <input-field type="int">
+            <name>likeMatchMinLength</name>
+            <label>Minimum search term length</label>
+            <label lang="de-DE">Minimale Suchbegrifflänge</label>
+            <helpText>Minimum number of characters required before LIKE matching is performed. Only effective if greater than Shopware's default search term length.</helpText>
+            <helpText lang="de-DE">Minimale Anzahl an Zeichen, bevor die LIKE-Suche ausgeführt wird. Nur wirksam, wenn größer als Shopware Standard-Suchbegrifflänge.</helpText>
+            <defaultValue>3</defaultValue>
+        </input-field>
+    </card>
+</config>

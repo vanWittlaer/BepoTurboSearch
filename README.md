@@ -18,6 +18,7 @@ This helps customers navigate directly to the right category or landing page, im
 
 - Display categories in search suggestions
 - Display landing pages in search suggestions
+- Products matching the search term against their product number are displayed with highest priority (optional)
 - Fully translatable titles and teaser texts
 - Smart search matching (exact match and prefix match)
 - Priority-based sorting (show most important results first)
@@ -135,6 +136,31 @@ When multiple targets match:
 - Search Terms: "shirt"
 
 **Result**: When customers type "shirt", both categories appear, with "Women's Shirts" first (higher priority).
+
+## Product Number LIKE Matching
+
+In addition to category and landing page suggestions, the plugin can also match products by their product number using a LIKE search.
+
+### How it works
+
+When a customer types a search term, the plugin searches for products where the product number contains the search term (SQL LIKE '%search-term%'). Matching products are displayed in a highlighted section above regular search results, showing:
+
+- Product number and name (e.g., "4711.00 Main Product")
+- Product cover image
+- Product price
+
+### Configuration
+
+Navigate to **Settings → System → Plugins → Turbo Search Suggests** to configure:
+
+- **Enable LIKE product matching**: Turn this feature on/off (default: enabled)
+- **Minimum search term length**: Set the minimum characters required before LIKE matching activates (default: 3)
+
+### Example
+
+If you have products with numbers like "ABC-1001", "ABC-1002", "ABC-2001":
+- Customer types "ABC-1" → Shows products "ABC-1001" and "ABC-1002"
+- Customer types "ABC" → Shows all three products
 
 ## Best Practices
 

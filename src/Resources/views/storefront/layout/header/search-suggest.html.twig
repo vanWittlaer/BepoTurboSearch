@@ -2,6 +2,7 @@
 
 {% block layout_search_suggest_results %}
     {% set turboTargets = page.getExtension('turboSuggestTargets') %}
+    {% set likeProducts = page.getExtension('turboLikeMatchedProducts') %}
 
     {% if turboTargets and turboTargets|length > 0 %}
         {% block layout_search_suggest_turbo_targets %}
@@ -66,14 +67,85 @@
         {% endblock %}
     {% endif %}
 
+    {% if likeProducts and likeProducts|length > 0 %}
+        {% block layout_search_suggest_like_products %}
+            {% for product in likeProducts %}
+                {% block layout_search_suggest_like_product_item %}
+                    <li class="js-result" role="option">
+                        <a href="{{ seoUrl('frontend.detail.page', {'productId': product.id}) }}"
+                           class="btn btn-primary w-100 d-flex align-items-center text-start mb-2"
+                           title="{{ product.translated.name }}">
+                            {% block layout_search_suggest_like_product_image %}
+                                {% if product.cover and product.cover.media and product.cover.media.url %}
+                                    <div class="me-3" style="width: 50px; height: 50px; flex-shrink: 0;">
+                                        {% set attributes = {
+                                            class: 'rounded',
+                                            style: 'width: 50px; height: 50px; object-fit: cover;',
+                                            title: (product.cover.media.translated.title ?: ''),
+                                            alt: (product.cover.media.translated.alt ?: product.translated.name)
+                                        } %}
+
+                                        {% sw_thumbnails 'turbo-suggest-like-product-image' with {
+                                            media: product.cover.media,
+                                            sizes: {
+                                                default: '50px'
+                                            },
+                                            attributes: attributes
+                                        } %}
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
+
+                            <div class="flex-grow-1">
+                                <div class="d-flex align-items-center">
+                                    <div class="fw-bold flex-grow-1">
+                                        {{ product.productNumber }} {{ product.translated.name }}
+                                    </div>
+                                    <div class="ms-3">
+                                        {% sw_icon 'arrow-medium-right' style { size: 'sm', pack: 'solid' } %}
+                                    </div>
+                                </div>
+                                {% block layout_search_suggest_like_product_price %}
+                                    {% if product.calculatedPrice %}
+                                        <div class="small">
+                                            {% set price = product.calculatedPrice %}
+                                            {% if product.calculatedPrices.count > 0 %}
+                                                {% set price = product.calculatedPrices.last %}
+                                            {% endif %}
+
+                                            {% if product.variantListingConfig.displayParent and product.parentId === null %}
+                                                {% set displayFromVariants = price.unitPrice !== product.calculatedCheapestPrice.unitPrice %}
+                                                {% set price = product.calculatedCheapestPrice %}
+                                            {% endif %}
+
+                                            {% if product.calculatedPrices.count > 1 or displayFromVariants %}
+                                                {{ 'listing.listingTextFrom'|trans|sw_sanitize }}
+                                            {% endif %}
+                                            {{ price.unitPrice|currency }}
+
+                                            {% if price.regulationPrice.price is not null %}
+                                                <span class="text-decoration-line-through ms-1">{{ price.regulationPrice.price|currency }}</span>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endblock %}
+                            </div>
+                        </a>
+                    </li>
+                {% endblock %}
+            {% endfor %}
+        {% endblock %}
+    {% endif %}
+
     {{ parent() }}
 {% endblock %}
 
 {% block layout_search_suggest_result_total %}
     {% set turboTargets = page.getExtension('turboSuggestTargets') %}
+    {% set likeProducts = page.getExtension('turboLikeMatchedProducts') %}
 
-    {# Don't show "No results found" if we have turbo targets #}
-    {% if not (turboTargets and turboTargets|length > 0) %}
+    {# Don't show "No results found" if we have turbo targets or like products #}
+    {% if not ((turboTargets and turboTargets|length > 0) or (likeProducts and likeProducts|length > 0)) %}
         {{ parent() }}
     {% endif %}
 {% endblock %}

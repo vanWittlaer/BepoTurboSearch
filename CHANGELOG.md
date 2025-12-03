@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-12-03
+
+### Added
+- **Product number LIKE matching**: Products are now matched against search terms using SQL LIKE '%search-term%' on the product number field
+- **Plugin configuration**: New settings in Admin to enable/disable LIKE matching (default: disabled) and set minimum search term length (default: 3)
+- **Priority display**: LIKE-matched products are displayed in a highlighted section above regular search results
+
 ## [0.1.1] - 2025-11-02
 
 ### Fixed
