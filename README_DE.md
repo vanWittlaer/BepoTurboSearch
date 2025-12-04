@@ -145,21 +145,28 @@ Zusätzlich zu Kategorie- und Landing Page-Vorschlägen kann das Plugin auch Pro
 
 Wenn ein Kunde einen Suchbegriff eingibt, sucht das Plugin nach Produkten, deren Produktnummer den Suchbegriff enthält (SQL LIKE '%suchbegriff%'). Übereinstimmende Produkte werden in einem hervorgehobenen Bereich über den regulären Suchergebnissen angezeigt:
 
-- Produktnummer und Name (z.B. "4711.00 Hauptprodukt")
+- Produktname und Preis
+- Produktnummer (mit hervorgehobenem Übereinstimmungsbereich)
 - Produktbild
-- Produktpreis
 
 ### Konfiguration
 
 Navigiere zu **Einstellungen → System → Plugins → Turbo-Suchvorschläge** um zu konfigurieren:
 
-- **LIKE-Produktsuche aktivieren**: Diese Funktion ein-/ausschalten (Standard: aktiviert)
+- **LIKE-Produktsuche aktivieren**: Diese Funktion ein-/ausschalten (Standard: deaktiviert)
 - **Minimale Suchbegrifflänge**: Minimale Zeichenanzahl bevor die LIKE-Suche aktiviert wird (Standard: 3)
+- **Nur Hauptprodukte**: Varianten ausschließen, nur Haupt-/Elternprodukte anzeigen (Standard: deaktiviert)
+- **Maximale Ergebnisse**: Anzahl der zurückgegebenen Produkte begrenzen (Standard: 10)
+
+### Warum diese Funktion nutzen?
+
+Shopwares Standardsuche hat oft Probleme mit Produktnummern, die führende Nullen oder Trennzeichen enthalten. Zum Beispiel findet die Suche nach "1234" das Produkt "001234" nicht. Unsere LIKE-Suche löst dieses Problem, indem sie überall innerhalb der Produktnummer sucht.
 
 ### Beispiel
 
 Bei Produkten mit Nummern wie "ABC-1001", "ABC-1002", "ABC-2001":
 - Kunde tippt "ABC-1" → Zeigt Produkte "ABC-1001" und "ABC-1002"
+- Kunde tippt "1001" → Zeigt Produkt "ABC-1001" (findet trotz Präfix)
 - Kunde tippt "ABC" → Zeigt alle drei Produkte
 
 ## Best Practices

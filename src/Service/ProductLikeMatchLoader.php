@@ -5,6 +5,7 @@ namespace Bepo\TurboSuggest\Service;
 use Shopware\Core\Content\Product\ProductCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -43,10 +44,24 @@ readonly class ProductLikeMatchLoader
             return new ProductCollection();
         }
 
+        $limit = $this->systemConfigService->getInt(
+            self::CONFIG_PREFIX . 'likeMatchLimit',
+            $salesChannelId
+        ) ?: 10;
+
         $criteria = new Criteria();
         $criteria->addFilter(new ContainsFilter('productNumber', $searchTerm));
         $criteria->addAssociation('cover.media');
-        $criteria->setLimit(10);
+        $criteria->setLimit($limit);
+
+        $mainProductsOnly = $this->systemConfigService->getBool(
+            self::CONFIG_PREFIX . 'likeMatchMainProductsOnly',
+            $salesChannelId
+        );
+
+        if ($mainProductsOnly) {
+            $criteria->addFilter(new EqualsFilter('parentId', null));
+        }
 
         /** @var ProductCollection $products */
         $products = $this->productRepository->search($criteria, $context)->getEntities();

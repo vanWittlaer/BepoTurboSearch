@@ -145,21 +145,28 @@ In addition to category and landing page suggestions, the plugin can also match 
 
 When a customer types a search term, the plugin searches for products where the product number contains the search term (SQL LIKE '%search-term%'). Matching products are displayed in a highlighted section above regular search results, showing:
 
-- Product number and name (e.g., "4711.00 Main Product")
+- Product name and price
+- Product number (with matching portion highlighted)
 - Product cover image
-- Product price
 
 ### Configuration
 
 Navigate to **Settings → System → Plugins → Turbo Search Suggests** to configure:
 
-- **Enable LIKE product matching**: Turn this feature on/off (default: enabled)
+- **Enable LIKE product matching**: Turn this feature on/off (default: disabled)
 - **Minimum search term length**: Set the minimum characters required before LIKE matching activates (default: 3)
+- **Main products only**: Exclude variant products from results, showing only main/parent products (default: disabled)
+- **Maximum results**: Limit the number of products returned (default: 10)
+
+### Why use this feature?
+
+Shopware's default search often struggles with product numbers containing leading zeros or separators. For example, searching "1234" won't find product "001234" with the standard search. Our LIKE matching solves this by searching anywhere within the product number.
 
 ### Example
 
 If you have products with numbers like "ABC-1001", "ABC-1002", "ABC-2001":
 - Customer types "ABC-1" → Shows products "ABC-1001" and "ABC-1002"
+- Customer types "1001" → Shows product "ABC-1001" (matches despite prefix)
 - Customer types "ABC" → Shows all three products
 
 ## Best Practices

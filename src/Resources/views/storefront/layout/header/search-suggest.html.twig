@@ -99,36 +99,48 @@
                             <div class="flex-grow-1">
                                 <div class="d-flex align-items-center">
                                     <div class="fw-bold flex-grow-1">
-                                        {{ product.productNumber }} {{ product.translated.name }}
+                                        {{ product.translated.name }}
                                     </div>
+                                    {% block layout_search_suggest_like_product_price %}
+                                        {% if product.calculatedPrice %}
+                                            <div class="ms-2 text-nowrap">
+                                                {% set price = product.calculatedPrice %}
+                                                {% if product.calculatedPrices.count > 0 %}
+                                                    {% set price = product.calculatedPrices.last %}
+                                                {% endif %}
+
+                                                {% if product.variantListingConfig.displayParent and product.parentId === null %}
+                                                    {% set displayFromVariants = price.unitPrice !== product.calculatedCheapestPrice.unitPrice %}
+                                                    {% set price = product.calculatedCheapestPrice %}
+                                                {% endif %}
+
+                                                {% if product.calculatedPrices.count > 1 or displayFromVariants %}
+                                                    {{ 'listing.listingTextFrom'|trans|sw_sanitize }}
+                                                {% endif %}
+                                                {{ price.unitPrice|currency }}
+
+                                                {% if price.regulationPrice.price is not null %}
+                                                    <span class="text-decoration-line-through ms-1">{{ price.regulationPrice.price|currency }}</span>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    {% endblock %}
                                     <div class="ms-3">
                                         {% sw_icon 'arrow-medium-right' style { size: 'sm', pack: 'solid' } %}
                                     </div>
                                 </div>
-                                {% block layout_search_suggest_like_product_price %}
-                                    {% if product.calculatedPrice %}
-                                        <div class="small">
-                                            {% set price = product.calculatedPrice %}
-                                            {% if product.calculatedPrices.count > 0 %}
-                                                {% set price = product.calculatedPrices.last %}
-                                            {% endif %}
+                                <div class="small text-white-50">
+                                    {% set searchTerm = page.searchTerm|default('')|lower %}
+                                    {% set productNum = product.productNumber %}
+                                    {% set productNumLower = productNum|lower %}
+                                    {% set matchPos = productNumLower|u.indexOf(searchTerm) %}
 
-                                            {% if product.variantListingConfig.displayParent and product.parentId === null %}
-                                                {% set displayFromVariants = price.unitPrice !== product.calculatedCheapestPrice.unitPrice %}
-                                                {% set price = product.calculatedCheapestPrice %}
-                                            {% endif %}
-
-                                            {% if product.calculatedPrices.count > 1 or displayFromVariants %}
-                                                {{ 'listing.listingTextFrom'|trans|sw_sanitize }}
-                                            {% endif %}
-                                            {{ price.unitPrice|currency }}
-
-                                            {% if price.regulationPrice.price is not null %}
-                                                <span class="text-decoration-line-through ms-1">{{ price.regulationPrice.price|currency }}</span>
-                                            {% endif %}
-                                        </div>
+                                    {% if searchTerm and matchPos is not same as(null) and matchPos >= 0 %}
+                                        {{ productNum|slice(0, matchPos) }}<span class="text-warning">{{ productNum|slice(matchPos, searchTerm|length) }}</span>{{ productNum|slice(matchPos + searchTerm|length) }}
+                                    {% else %}
+                                        {{ productNum }}
                                     {% endif %}
-                                {% endblock %}
+                                </div>
                             </div>
                         </a>
                     </li>
