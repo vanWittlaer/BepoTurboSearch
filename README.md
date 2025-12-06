@@ -143,7 +143,14 @@ In addition to category and landing page suggestions, the plugin can also match 
 
 ### How it works
 
-When a customer types a search term, the plugin searches for products where the product number contains the search term (SQL LIKE '%search-term%'). Matching products are displayed in a highlighted section above regular search results, showing:
+When a customer types a search term, the plugin searches for products where the product number contains the search term (SQL LIKE '%search-term%'). Matching products are displayed:
+
+- In the **suggest dropdown**: highlighted section above regular suggestions
+- In the **search results page**: merged into the regular product listing
+
+Duplicates are automatically removed from Shopware's default results (including variants when their parent is matched).
+
+Displayed product information:
 
 - Product name and price
 - Product number (with matching portion highlighted)

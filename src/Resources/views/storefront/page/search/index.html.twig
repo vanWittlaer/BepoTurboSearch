@@ -1,0 +1,10 @@
+{% sw_extends '@Storefront/storefront/page/search/index.html.twig' %}
+
+{% block page_search_headline_text %}
+    {% if page.searchTerm %}
+        {{ 'search.headline'|trans({
+            '%count%': page.listing.count,
+            '%searchTerm%': page.searchTerm,
+        }) }}
+    {% endif %}
+{% endblock %}

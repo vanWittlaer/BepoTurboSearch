@@ -5,7 +5,10 @@ namespace Bepo\TurboSuggest\Service;
 use Shopware\Core\Content\Product\ProductCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\ContainsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\NotFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Grouping\FieldGrouping;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Shopware\Core\System\SalesChannel\Entity\SalesChannelRepository;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -54,14 +57,15 @@ readonly class ProductLikeMatchLoader
         $criteria->addAssociation('cover.media');
         $criteria->setLimit($limit);
 
-        $mainProductsOnly = $this->systemConfigService->getBool(
-            self::CONFIG_PREFIX . 'likeMatchMainProductsOnly',
-            $salesChannelId
+        // Group by displayGroup and exclude null (same behavior as category listings)
+        $criteria->addGroupField(new FieldGrouping('displayGroup'));
+        $criteria->addFilter(
+            new NotFilter(
+                NotFilter::CONNECTION_AND,
+                [new EqualsFilter('displayGroup', null)]
+            )
         );
-
-        if ($mainProductsOnly) {
-            $criteria->addFilter(new EqualsFilter('parentId', null));
-        }
+        $criteria->addSorting(new FieldSorting('productNumber', FieldSorting::ASCENDING));
 
         /** @var ProductCollection $products */
         $products = $this->productRepository->search($criteria, $context)->getEntities();

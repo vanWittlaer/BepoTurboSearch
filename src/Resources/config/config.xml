@@ -23,15 +23,6 @@
             <defaultValue>3</defaultValue>
         </input-field>
 
-        <input-field type="bool">
-            <name>likeMatchMainProductsOnly</name>
-            <label>Main products only</label>
-            <label lang="de-DE">Nur Hauptprodukte</label>
-            <helpText>When enabled, only main products are returned. Variant articles are excluded from the results.</helpText>
-            <helpText lang="de-DE">Wenn aktiviert, werden nur Hauptprodukte zurückgegeben. Varianten werden aus den Ergebnissen ausgeschlossen.</helpText>
-            <defaultValue>true</defaultValue>
-        </input-field>
-
         <input-field type="int">
             <name>likeMatchLimit</name>
             <label>Maximum results</label>
