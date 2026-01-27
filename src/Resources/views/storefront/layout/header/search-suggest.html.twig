@@ -69,10 +69,10 @@
     {{ parent() }}
 {% endblock %}
 
-{% block layout_search_suggest_result_total %}
+{% block layout_search_suggest_no_result %}
     {% set turboTargets = page.getExtension('turboSuggestTargets') %}
 
-    {# Don't show "No results found" if we have turbo targets #}
+    {# Hide "No results found" message when turbo targets exist #}
     {% if not (turboTargets and turboTargets|length > 0) %}
         {{ parent() }}
     {% endif %}
